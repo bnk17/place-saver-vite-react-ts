@@ -1,0 +1,15 @@
+/* TailwindCSS theme variables */
+@theme {
+  --default-font-family: var(--font-lexend);
+  --font-body: var(--font-lexend);
+  --font-heading: var(--font-outfit);
+
+  --color-light-grey: #fafafa;
+  /* NEW: Fluid font size variables */
+  --text-sm: clamp(0.875rem, 1.5vw, 1rem);
+  --text-base: clamp(1rem, 2vw, 1.25rem);
+  --text-lg: clamp(1.125rem, 2.5vw, 1.5rem);
+  --text-xl: clamp(1.125rem, 2.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 4vw, 2.25rem);
+  --text-h1: clamp(2rem, 5vw, 4rem);
+}
