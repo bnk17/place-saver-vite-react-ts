@@ -1,52 +1,53 @@
-import { useReducer } from 'react';
-import {
-  PlaceFormReducer,
-  placeInitialState,
-} from 'src/reducers/PlaceFormReducer';
+import { useEffect, useReducer, useRef, useState } from 'react';
+import { PlaceReducer, placeInitialState } from 'src/reducers/PlaceFormReducer';
 import './App.css';
-import { PlaceForm } from './components/PlaceForm/PlaceForm';
-import { Button } from './components/ui/Button';
+import { PlaceSearch } from './components/PlaceSearch/PlaceSearch';
 import {
   PlaceContext,
   PlaceDispatchContext,
 } from './context/Places/PlacesContext';
 import { PlacesList } from './features/PlacesList/PlacesList';
+import { Button } from './components/ui/Button';
 
 export function App() {
-  const [placeFomState, placeFormDispatch] = useReducer(
-    PlaceFormReducer,
+  const [mode, setMode] = useState<'place-list' | 'search'>('search');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [placeState, placeDispatchAction] = useReducer(
+    PlaceReducer,
     placeInitialState
   );
 
-  function handleOpenFormCLick() {
-    if (!placeFomState.isFormOpen) {
-      placeFormDispatch({ type: 'Clear_Form' });
+  function handleChangeMode() {
+    if (mode === 'search') {
+      setMode('place-list');
+      return;
     }
-    placeFormDispatch({
-      type: 'Set_Form_Open',
-      payload: !placeFomState.isFormOpen,
-    });
+    setMode('search');
   }
 
+  useEffect(() => {
+    if (mode === 'search') inputRef.current?.focus();
+  }, [mode]);
+
   return (
-    <main className="flex flex-col lg:max-w-[800px] lg:m-auto p-4 bg-[#fafafa] h-[100vh]">
+    <main className="flex flex-col lg:max-w-[800px] lg:m-auto p-4 h-[90vh] md:h-[100vh]">
       <section className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">ChaaLaba</h1>
+        <h1 className="text-h1 w-full text-zinc-00 font-semibold">Rmnd.</h1>
         <Button
-          variant="secondary"
-          className="text-sm"
-          onClick={() => handleOpenFormCLick()}
+          className="w-fit text-nowrap bg-zinc-900"
+          size="sm"
+          onClick={() => handleChangeMode()}
         >
-          {placeFomState.isFormOpen ? 'Fermer formulaire' : ' Ajouter un lieu'}
+          {mode === 'search' ? 'Liste des lieux' : 'Rechercher un lieu'}
         </Button>
       </section>
-      <PlaceContext value={placeFomState}>
-        <PlaceDispatchContext value={placeFormDispatch}>
-          <main className="lg:max-w-[500px] max-h-max">
-            {placeFomState.isFormOpen ? (
-              <PlaceForm place={placeFomState} />
+      <PlaceContext value={placeState}>
+        <PlaceDispatchContext value={placeDispatchAction}>
+          <main className="lg:max-w-[500px] h-full">
+            {mode === 'search' ? (
+              <PlaceSearch inputRef={inputRef} />
             ) : (
-              <PlacesList placesList={placeFomState.placesState} />
+              <PlacesList placesList={placeState.placesState} />
             )}
           </main>
         </PlaceDispatchContext>

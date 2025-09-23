@@ -4,21 +4,24 @@ export type IPlaceCategory = {
 };
 
 export type IPlaceData = {
-  categories: IPlaceCategory[];
   name: string;
-  adress?: string;
+  adress: string;
+  categories?: IPlaceCategory[];
   additionnalInfo?: string;
   imgSrc?: string;
+  // Optional Google Maps specific fields
+  placeId?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+  rating?: number;
+  website?: string;
+  phoneNumber?: string;
+  googlePhotos?: string[];
+  googleMapsUrl?: string;
 };
 
 export type IPlaceReducerState = {
-  isFormOpen?: boolean;
-  form: {
-    categories: IPlaceCategory[];
-    name: string;
-    adress: string;
-    additionnalInfo: string;
-    imgSrc: string;
-  };
   placesState: IPlaceData[];
 };

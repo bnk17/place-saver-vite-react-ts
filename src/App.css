@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
-/* TailwindCSS theme variables */
+:root {
+  background-color: '#f7f7f';
+}
 /* TailwindCSS theme variables */
 @theme {
   --default-font-family: var(--font-lexend);

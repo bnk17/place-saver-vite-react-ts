@@ -4,6 +4,7 @@ import { cn } from '../../utils/Helpers';
 type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
+  buttonRef?: React.Ref<HTMLButtonElement> | undefined;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -25,6 +26,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   className,
+  buttonRef,
   children,
   disabled,
   type = 'button',
@@ -32,6 +34,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
+      ref={buttonRef}
       type={type}
       className={cn(
         'inline-flex items-center justify-center rounded-md font-medium focus:outline-3  disabled:opacity-50 disabled:cursor-not-allowed',
