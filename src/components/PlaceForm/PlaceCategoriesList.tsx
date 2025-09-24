@@ -52,7 +52,7 @@ export const AddCategory = ({ onAddCategory }: IAddcategory) => {
       <Button
         size="sm"
         type="button"
-        className="mt-2 h-[44px] px-2"
+        className="mt-2 px-2"
         onClick={() => handleAddCategories()}
       >
         Ajouter
@@ -62,10 +62,12 @@ export const AddCategory = ({ onAddCategory }: IAddcategory) => {
 };
 
 type ICategoriesListProps = {
-  places: IPlaceCategory[];
+  categories: IPlaceCategory[];
 };
 
-export const CategoriesList = ({ places }: ICategoriesListProps) => {
+export const CategoriesList = ({
+  categories: places,
+}: ICategoriesListProps) => {
   const placeReducerAction = useContext(PlaceDispatchContext);
   return (
     <div>
