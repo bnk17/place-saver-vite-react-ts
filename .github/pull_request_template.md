@@ -2,8 +2,8 @@
 
 ## Key changes
 
-# In the codebase
+### In the codebase
 
-# Outside the codebase
+### Outside the codebase
 
 ## How to test
