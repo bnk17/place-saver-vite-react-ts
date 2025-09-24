@@ -106,7 +106,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           additionalInfo
         );
 
-        const isNameExist = placeState?.placesState.some(({ name }) => {
+        const isNameExist = placeState?.savedPlacesList.some(({ name }) => {
           return name === placeData.name;
         });
 
@@ -116,7 +116,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
 
         if (placeDispatchAction !== null) {
           placeDispatchAction({
-            type: 'Set_Add_Place',
+            type: 'Set_Select_Place',
             payload: {
               adress: placeData.adress,
               name: placeData.name,
@@ -149,7 +149,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
         );
       }
     },
-    [getPlaceDetails, placeState?.placesState, placeDispatchAction]
+    [getPlaceDetails, placeState?.savedPlacesList, placeDispatchAction]
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
