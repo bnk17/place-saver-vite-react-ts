@@ -1,12 +1,18 @@
 // initial state
 
-import type { IPlaceData, IPlaceReducerState } from 'src/shared/types';
+import type {
+  IFormMode,
+  IPlaceData,
+  IPlaceReducerState,
+} from 'src/shared/types';
 
 export const placeInitialState: IPlaceReducerState = {
+  form_mode: 'initial',
   placesState: [],
 };
 
 //actions
+type SetUpdateFormMode = { type: 'Set_Update_Form_Mode'; payload: IFormMode };
 type SetAddPlace = { type: 'Set_Add_Place'; payload: IPlaceData };
 type SetDeletePlace = { type: 'Set_Delete_Place'; payload: IPlaceData['name'] };
 
@@ -18,6 +24,7 @@ type SetPlaceCategories = {
 type SetDeleteCategory = { type: 'Set_Delete_Category'; payload: string };
 
 export type IPlaceStateAction =
+  | SetUpdateFormMode
   | SetAddPlace
   | SetDeletePlace
   | SetPlaceCategories
@@ -31,9 +38,15 @@ export const PlaceReducer = (
   if (action === null) return state;
 
   switch (action.type) {
+    case 'Set_Update_Form_Mode': {
+      return {
+        ...state,
+        form_mode: action.payload,
+      };
+    }
     case 'Set_Add_Place': {
       return {
-        ...state.placesState,
+        ...state,
         placesState: [...state.placesState, action.payload],
       };
     }

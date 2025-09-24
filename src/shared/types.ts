@@ -22,6 +22,8 @@ export type IPlaceData = {
   googleMapsUrl?: string;
 };
 
+export type IFormMode = 'initial' | 'creating' | 'ready';
 export type IPlaceReducerState = {
+  form_mode: IFormMode;
   placesState: IPlaceData[];
 };
