@@ -188,19 +188,19 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
   };
 
   return (
-    <div className=" h-full w-full flex flex-col items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       {errorMessage && (
         <div
-          className={`p-4 w-full bg-red-50 border border-red-200 rounded-md mb-5 text-red-700 text-sm`}
+          className={`mb-5 w-full rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700`}
         >
           {errorMessage}
         </div>
       )}
-      <div className={`relative w-full h-fit`}>
+      <div className={`relative h-fit w-full`}>
         {/* Search Input */}
         <div
           className={
-            'border-2 border-slate-300 focus-within:border-blue-600 rounded-2xl w-full h-fit relative flex items-end justify-center p-3 gap-2 focus-within:shadow-lg shadow-blue-500/25 transition-all ease-out duration-75'
+            'relative flex h-fit w-full items-end justify-center gap-2 rounded-2xl border-2 border-slate-300 p-3 shadow-blue-500/25 transition-all duration-75 ease-out focus-within:border-blue-600 focus-within:shadow-lg'
           }
         >
           <Input
@@ -215,35 +215,35 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
 
           {/* Loading indicator */}
           {(isMapsLoading || isSearching) && (
-            <div className="right-3 top-1/2 transform -translate-y-1/2">
-              <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+            <div className="top-1/2 right-3 -translate-y-1/2 transform">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
             </div>
           )}
         </div>
 
         {/* Search Results Dropdown */}
         {showResults && searchResults.length > 0 && (
-          <div className=" absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-lg max-h-60 overflow-y-auto">
+          <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-lg border border-gray-300 bg-white">
             {searchResults.map((result) => (
               <button
                 key={result.placeId}
                 onClick={() => handlePlaceSelect(result)}
                 disabled={result.isLoading}
-                className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full border-b border-gray-100 px-4 py-3 text-left last:border-b-0 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-medium text-gray-900">
                       {result.name}
                     </p>
-                    <p className="text-sm text-gray-500 truncate">
+                    <p className="truncate text-sm text-gray-500">
                       {result.formattedAddress}
                     </p>
                   </div>
 
                   {result.isLoading && (
                     <div className="ml-2 flex-shrink-0">
-                      <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
                     </div>
                   )}
                 </div>
@@ -257,8 +257,8 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           searchResults.length === 0 &&
           query.trim() &&
           !isSearching && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4">
-              <p className="text-gray-500 text-sm">
+            <div className="absolute top-full right-0 left-0 z-50 mt-1 rounded-lg border border-gray-300 bg-white p-4 shadow-lg">
+              <p className="text-sm text-gray-500">
                 No places found for "{query}"
               </p>
             </div>

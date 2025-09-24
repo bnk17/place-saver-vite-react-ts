@@ -10,7 +10,7 @@ type PlaceCategoryListProps = {
 };
 
 export const PlaceCategoriesList = ({ category }: PlaceCategoryListProps) => {
-  return <div className="p-2 size-10 bg-slate-400">{category.name}</div>;
+  return <div className="size-10 bg-slate-400 p-2">{category.name}</div>;
 };
 
 type IAddcategory = {
@@ -32,7 +32,7 @@ export const AddCategory = ({ onAddCategory }: IAddcategory) => {
   }
 
   return (
-    <div className="flex gap-1 items-end">
+    <div className="flex items-end gap-1">
       <Input
         inputRef={categoryInputRef}
         name="categories"
@@ -52,7 +52,7 @@ export const AddCategory = ({ onAddCategory }: IAddcategory) => {
       <Button
         size="sm"
         type="button"
-        className="mt-2 px-2 h-[44px]"
+        className="mt-2 h-[44px] px-2"
         onClick={() => handleAddCategories()}
       >
         Ajouter
@@ -69,12 +69,12 @@ export const CategoriesList = ({ places }: ICategoriesListProps) => {
   const placeReducerAction = useContext(PlaceDispatchContext);
   return (
     <div>
-      <div className="flex gap-1 mt-2">
+      <div className="mt-2 flex gap-1">
         {places.map((cat) => {
           return (
             <div
               key={cat.name}
-              className="flex items-center gap-1 border-1 border-blue-600 bg-blue-200 text-blue-700 px-1 py-0.5 text-sm rounded-sm cursor-pointer"
+              className="flex cursor-pointer items-center gap-1 rounded-sm border-1 border-blue-600 bg-blue-200 px-1 py-0.5 text-sm text-blue-700"
               onClick={() => {
                 if (placeReducerAction !== null)
                   placeReducerAction({
