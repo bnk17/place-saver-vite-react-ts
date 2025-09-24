@@ -8,12 +8,12 @@ type PlaceFormProps = {
 export const PlaceForm = ({ place }: PlaceFormProps) => {
   return (
     <form
-      className="w-full flex gap-2 h-full flex-col justify-end"
+      className="flex h-full w-full flex-col justify-end gap-2"
       onLoad={(e) => console.log(e)}
     >
       <div
         className={
-          'border-2 border-slate-300 rounded-2xl w-full h-fit relative flex items-end justify-center p-3 gap-2 mb-10  focus-within:shadow-lg shadow-blue-500/25 transition-all ease-out duration-75'
+          'relative mb-10 flex h-fit w-full items-end justify-center gap-2 rounded-2xl border-2 border-slate-300 p-3 shadow-blue-500/25 transition-all duration-75 ease-out focus-within:shadow-lg'
         }
       >
         <Input
@@ -23,7 +23,7 @@ export const PlaceForm = ({ place }: PlaceFormProps) => {
           onValueChange={() => null}
         />
 
-        <Button size="md" className="h-[30px] ">
+        <Button size="md" className="h-[30px]">
           send
         </Button>
       </div>

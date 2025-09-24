@@ -6,24 +6,24 @@
 export const GOOGLE_MAPS_CONFIG = {
   // Libraries to load
   libraries: ['places'] as const,
-  
+
   // API version
   version: 'weekly' as const,
-  
+
   // Default search options
   defaultSearchOptions: {
     radius: 50000, // 50km radius
   },
-  
+
   // Maximum number of search results to display
   maxSearchResults: 5,
-  
+
   // Default photo dimensions
   defaultPhotoOptions: {
     maxWidth: 400,
     maxHeight: 400,
   },
-  
+
   // Debounce delay for search input (ms)
   searchDebounceDelay: 300,
 } as const;
@@ -57,7 +57,7 @@ export const PLACE_TYPE_CATEGORIES = {
   cafe: 'Cafe',
   bar: 'Bar',
   bakery: 'Bakery',
-  
+
   // Shopping
   store: 'Store',
   shopping_mall: 'Shopping Mall',
@@ -66,7 +66,7 @@ export const PLACE_TYPE_CATEGORIES = {
   book_store: 'Bookstore',
   jewelry_store: 'Jewelry',
   shoe_store: 'Shoes',
-  
+
   // Entertainment & Culture
   tourist_attraction: 'Tourist Attraction',
   museum: 'Museum',
@@ -75,10 +75,10 @@ export const PLACE_TYPE_CATEGORIES = {
   amusement_park: 'Amusement Park',
   zoo: 'Zoo',
   aquarium: 'Aquarium',
-  
+
   // Accommodation
   lodging: 'Hotel',
-  
+
   // Health & Wellness
   hospital: 'Hospital',
   pharmacy: 'Pharmacy',
@@ -88,12 +88,12 @@ export const PLACE_TYPE_CATEGORIES = {
   gym: 'Gym',
   spa: 'Spa',
   beauty_salon: 'Beauty Salon',
-  
+
   // Education
   school: 'School',
   university: 'University',
   library: 'Library',
-  
+
   // Services
   bank: 'Bank',
   atm: 'ATM',
@@ -102,29 +102,29 @@ export const PLACE_TYPE_CATEGORIES = {
   car_repair: 'Car Repair',
   gas_station: 'Gas Station',
   laundry: 'Laundry',
-  
+
   // Recreation
   park: 'Park',
   stadium: 'Stadium',
   bowling_alley: 'Bowling',
   golf_course: 'Golf',
-  
+
   // Nightlife
   night_club: 'Nightclub',
-  
+
   // Religious
   church: 'Church',
   mosque: 'Mosque',
   synagogue: 'Synagogue',
   hindu_temple: 'Temple',
-  
+
   // Transportation
   airport: 'Airport',
   subway_station: 'Subway',
   train_station: 'Train Station',
   bus_station: 'Bus Station',
   taxi_stand: 'Taxi',
-  
+
   // Government
   city_hall: 'City Hall',
   courthouse: 'Courthouse',
@@ -135,13 +135,17 @@ export const PLACE_TYPE_CATEGORIES = {
 
 // Error messages
 export const ERROR_MESSAGES = {
-  API_KEY_MISSING: 'Google Maps API key is required. Please set VITE_GOOGLE_MAPS_API_KEY in your environment variables.',
-  INITIALIZATION_FAILED: 'Failed to initialize Google Maps API. Please check your API key and internet connection.',
+  API_KEY_MISSING:
+    'Google Maps API key is required. Please set VITE_GOOGLE_MAPS_API_KEY in your environment variables.',
+  INITIALIZATION_FAILED:
+    'Failed to initialize Google Maps API. Please check your API key and internet connection.',
   SEARCH_FAILED: 'Place search failed. Please try again.',
   DETAILS_FAILED: 'Failed to get place details. Please try again.',
-  SERVICE_NOT_READY: 'Google Maps service is not ready. Please wait for initialization.',
+  SERVICE_NOT_READY:
+    'Google Maps service is not ready. Please wait for initialization.',
   QUOTA_EXCEEDED: 'Google Maps API quota exceeded. Please try again later.',
-  REQUEST_DENIED: 'Google Maps API request was denied. Please check your API key permissions.',
+  REQUEST_DENIED:
+    'Google Maps API request was denied. Please check your API key permissions.',
 } as const;
 
 // Helper function to get error message
@@ -165,22 +169,26 @@ export function getErrorMessage(status: string): string {
 // Helper function to validate API key format
 export function isValidGoogleMapsApiKey(apiKey: string): boolean {
   // Basic validation - Google Maps API keys typically start with 'AIza' and are 39 characters long
-  return typeof apiKey === 'string' && 
-         apiKey.startsWith('AIza') && 
-         apiKey.length === 39;
+  return (
+    typeof apiKey === 'string' &&
+    apiKey.startsWith('AIza') &&
+    apiKey.length === 39
+  );
 }
 
 // Helper function to get API key with validation
 export function getGoogleMapsApiKey(): string {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  
+
   if (!apiKey) {
     throw new Error(ERROR_MESSAGES.API_KEY_MISSING);
   }
-  
+
   if (!isValidGoogleMapsApiKey(apiKey)) {
-    console.warn('Google Maps API key format appears to be invalid. Expected format: AIza... (39 characters)');
+    console.warn(
+      'Google Maps API key format appears to be invalid. Expected format: AIza... (39 characters)'
+    );
   }
-  
+
   return apiKey;
 }

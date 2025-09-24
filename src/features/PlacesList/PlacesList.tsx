@@ -14,7 +14,7 @@ export const PlacesList = ({ placesList }: PlacesListProps) => {
   }
 
   return (
-    <section className="flex flex-col gap-2 mt-10">
+    <section className="mt-10 flex flex-col gap-2">
       {placesList.length === 0 ? (
         <p>Aucun lieu n'a été ajouté pour le moment</p>
       ) : (
@@ -22,18 +22,18 @@ export const PlacesList = ({ placesList }: PlacesListProps) => {
           return (
             <div
               key={place.name}
-              className="relative p-2 border-b-1 border-gray-200"
+              className="relative border-b-1 border-gray-200 p-2"
             >
-              <div className="text-sm flex flex-wrap justify-between items-center gap-2">
-                <div className="flex gap-2 items-center">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                <div className="flex items-center gap-2">
                   <img
-                    className=" size-14 rounded-lg"
+                    className="size-14 rounded-lg"
                     src={place.imgSrc}
                     alt="picture of the place "
                   />
                   <div>
-                    <p className="text-lg font-medium ">{place.name}</p>
-                    <p className=" w-[25ch] text-[12px]">{place.adress}</p>
+                    <p className="text-lg font-medium">{place.name}</p>
+                    <p className="w-[25ch] text-[12px]">{place.adress}</p>
                   </div>
                 </div>
                 {/* <div className="flex gap-1">
@@ -56,7 +56,7 @@ export const PlacesList = ({ placesList }: PlacesListProps) => {
                 })}
               </div> */}
                 <span
-                  className=" top-0 right-0 px-2 text-gray-600 border-1 border-gray-300 m-2 rounded-sm"
+                  className="top-0 right-0 m-2 rounded-sm border-1 border-gray-300 px-2 text-gray-600"
                   onClick={() => handleDeletePlace(place.name)}
                 >
                   -
