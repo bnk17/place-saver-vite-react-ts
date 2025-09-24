@@ -30,11 +30,11 @@ export function App() {
   }, [mode]);
 
   return (
-    <main className="flex flex-col lg:max-w-[800px] lg:m-auto p-4 h-[90vh] md:h-[100vh]">
-      <section className="flex justify-between items-center">
-        <h1 className="text-h1 w-full text-zinc-00 font-semibold">Rmnd.</h1>
+    <main className="flex h-[90vh] flex-col p-4 md:h-[100vh] lg:m-auto lg:max-w-[800px]">
+      <section className="flex items-center justify-between">
+        <h1 className="text-h1 text-zinc-00 w-full font-semibold">Rmnd.</h1>
         <Button
-          className="w-fit text-nowrap bg-zinc-900"
+          className="w-fit bg-zinc-900 text-nowrap"
           size="sm"
           onClick={() => handleChangeMode()}
         >
@@ -43,7 +43,7 @@ export function App() {
       </section>
       <PlaceContext value={placeState}>
         <PlaceDispatchContext value={placeDispatchAction}>
-          <main className="lg:max-w-[500px] h-full">
+          <main className="h-full lg:max-w-[500px]">
             {mode === 'search' ? (
               <PlaceSearch inputRef={inputRef} />
             ) : (
