@@ -17,7 +17,7 @@ export const Input = ({
   return (
     <input
       ref={inputRef}
-      className="w-full resize-none text-lg outline-none"
+      className="text-md w-full resize-none outline-none"
       name={name}
       value={value}
       placeholder={placeholder}

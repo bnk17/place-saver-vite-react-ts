@@ -37,7 +37,7 @@ export function Button({
       ref={buttonRef}
       type={type}
       className={cn(
-        'inline-flex items-center justify-center rounded-md font-medium focus:outline-3 disabled:cursor-not-allowed disabled:opacity-50',
+        'items-center justify-center rounded-full font-medium disabled:cursor-not-allowed disabled:opacity-50',
         buttonVariants[variant],
         buttonSizes[size],
         className
