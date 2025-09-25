@@ -106,9 +106,11 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           additionalInfo
         );
 
-        const isNameExist = placeState?.savedPlacesList.some(({ name }) => {
-          return name === placeData.name;
-        });
+        const isNameExist = placeState?.savedPlacesList.place.some(
+          ({ name }) => {
+            return name === placeData.name;
+          }
+        );
 
         if (isNameExist) {
           throw new Error('Ce lieu à déjà été ajouté.');
@@ -253,7 +255,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
         )}
 
         {/* No results message */}
-        {showResults &&
+        {/* {showResults &&
           searchResults.length === 0 &&
           query.trim() &&
           !isSearching && (
@@ -262,7 +264,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
                 No places found for "{query}"
               </p>
             </div>
-          )}
+          )} */}
       </div>
     </div>
   );

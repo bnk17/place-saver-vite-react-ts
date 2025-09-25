@@ -17,7 +17,7 @@ type SetPlaceCategories = {
   payload: string;
 };
 
-export type IPlaceStateAction =
+export type IPlaceReducerAction =
   | SetUpdateFormMode
   | SetSelectPlace
   | SetSavePlace
@@ -31,13 +31,16 @@ export const placeInitialState: IPlaceReducerState = {
     selectedPlace: undefined,
     categories: [],
   },
-  savedPlacesList: [],
+  savedPlacesList: {
+    place: [],
+    categories: [],
+  },
 };
 
 //reducer function
 export const PlaceReducer = (
   state: IPlaceReducerState,
-  action: IPlaceStateAction
+  action: IPlaceReducerAction
 ): IPlaceReducerState => {
   if (action === null) return state;
 
@@ -64,7 +67,6 @@ export const PlaceReducer = (
         ...state,
         form: {
           ...state.form,
-          mode: 'adding_details',
           categories: [...state.form.categories, { name: action.payload }],
         },
       };
@@ -74,18 +76,24 @@ export const PlaceReducer = (
         ...state,
         form: {
           ...state.form,
-          mode: 'ready_for_submission',
+          mode: 'submited',
         },
-        savedPlacesList: [...state.savedPlacesList, action.payload],
+        savedPlacesList: {
+          place: [...state.savedPlacesList.place, action.payload],
+          categories: [...state.form.categories],
+        },
       };
     }
 
     case 'Set_Delete_Place': {
       return {
         ...state,
-        savedPlacesList: state.savedPlacesList.filter((place) => {
-          return place.name !== action.payload;
-        }),
+        savedPlacesList: {
+          place: state.savedPlacesList.place.filter((place) => {
+            return place.name !== action.payload;
+          }),
+          categories: [],
+        },
       };
     }
 

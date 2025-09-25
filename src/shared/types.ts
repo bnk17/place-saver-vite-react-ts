@@ -22,12 +22,16 @@ export type IPlaceData = {
   googleMapsUrl?: string;
 };
 
-export type IFormMode = 'initial' | 'adding_details' | 'ready_for_submission';
+export type IFormMode = 'initial' | 'adding_details' | 'submited';
+
 export type IPlaceReducerState = {
   form: {
     mode: IFormMode;
     selectedPlace: IPlaceData | undefined;
     categories: IPlaceCategory[];
   };
-  savedPlacesList: IPlaceData[];
+  savedPlacesList: {
+    place: IPlaceData[];
+    categories: IPlaceCategory[];
+  };
 };
