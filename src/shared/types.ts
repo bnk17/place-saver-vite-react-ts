@@ -22,11 +22,11 @@ export type IPlaceData = {
   googleMapsUrl?: string;
 };
 
-export type IFormMode = 'initial' | 'adding_details' | 'submited';
+export type IAppMode = 'initial' | 'form_search' | 'form_adding_details';
 
 export type IPlaceReducerState = {
+  appMode: IAppMode;
   form: {
-    mode: IFormMode;
     selectedPlace: IPlaceData | undefined;
     categories: IPlaceCategory[];
   };

@@ -4,18 +4,18 @@ import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagManager } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
 
-type IAddingDetailsViewProps = {
+type IFormAddingDetailsViewProps = {
   placeSelected: IPlaceData | undefined;
   formTag: IPlaceCategory[];
   reducerDispatchAction: React.ActionDispatch<
     [action: IPlaceReducerAction]
   > | null;
 };
-export const AddingDetailsView = ({
+export const FormAddingDetailsView = ({
   placeSelected,
   formTag: formCategories,
   reducerDispatchAction,
-}: IAddingDetailsViewProps) => {
+}: IFormAddingDetailsViewProps) => {
   if (placeSelected === undefined) return;
   return (
     <div className="mt-5">
@@ -42,8 +42,8 @@ export const AddingDetailsView = ({
               },
             });
             reducerDispatchAction({
-              type: 'Set_Update_Form_Mode',
-              payload: 'submited',
+              type: 'Set_Update_App_Mode',
+              payload: 'initial',
             });
           }
         }}

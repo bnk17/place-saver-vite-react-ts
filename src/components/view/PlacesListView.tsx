@@ -2,17 +2,36 @@ import type { IPlaceCategory, IPlaceData } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagManager } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
+import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
 
-type ISubmitedViewProps = {
+type IPlacesListViewProps = {
   places: IPlaceData[];
   categories: IPlaceCategory[];
+  reducerDispatchAction: React.ActionDispatch<
+    [action: IPlaceReducerAction]
+  > | null;
 };
-export const SubmitedView = ({ places, categories }: ISubmitedViewProps) => {
+export const IPlacesListView = ({
+  places,
+  categories,
+  reducerDispatchAction,
+}: IPlacesListViewProps) => {
   if (places.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
         <p className="text-lg">Aucun lieu n'a été enregistré</p>
-        <Button className="bg-zinc-900">Chercher un lieu</Button>
+        <Button
+          className="bg-zinc-900"
+          onClick={() => {
+            if (reducerDispatchAction !== null)
+              reducerDispatchAction({
+                type: 'Set_Update_App_Mode',
+                payload: 'form_search',
+              });
+          }}
+        >
+          Chercher un lieu
+        </Button>
       </div>
     );
   }
