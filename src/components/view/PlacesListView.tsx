@@ -19,7 +19,7 @@ export const IPlacesListView = ({
   if (places.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
-        <p className="text-lg">Aucun lieu n'a été enregistré</p>
+        <p className="text-lg">Aucun spot n'a été enregistré</p>
         <Button
           className="bg-zinc-900"
           onClick={() => {
@@ -30,7 +30,7 @@ export const IPlacesListView = ({
               });
           }}
         >
-          Chercher un lieu
+          Rechercher un spot
         </Button>
       </div>
     );
