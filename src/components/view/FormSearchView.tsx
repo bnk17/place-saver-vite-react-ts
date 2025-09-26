@@ -208,7 +208,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           <Input
             inputRef={inputRef}
             name="name"
-            placeholder="Entrer le nom du lieu"
+            placeholder="Tape un endroit sympa…"
             value={query}
             onValueChange={handleInputChange}
             onBlur={handleInputBlur}

@@ -35,7 +35,9 @@ export function App() {
       <AppHeader
         formMode={placeState.appMode}
         buttonLabel={
-          placeState.appMode === 'initial' ? 'Chercher un lieu' : 'Mes lieux'
+          placeState.appMode === 'initial'
+            ? 'Rechercher un spot'
+            : '📍 Mes spots'
         }
         onChangeMode={() => handleAppChangeModeClick()}
       />
