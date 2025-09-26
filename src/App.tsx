@@ -16,22 +16,27 @@ export function App() {
   );
 
   function handleAppChangeModeClick() {
-    if (placeState.form.mode === 'submited') {
-      placeDispatchAction({ type: 'Set_Update_Form_Mode', payload: 'initial' });
+    if (placeState.appMode === 'initial') {
+      placeDispatchAction({
+        type: 'Set_Update_App_Mode',
+        payload: 'form_search',
+      });
       return;
     }
-    placeDispatchAction({ type: 'Set_Update_Form_Mode', payload: 'submited' });
+    placeDispatchAction({ type: 'Set_Update_App_Mode', payload: 'initial' });
   }
 
   useEffect(() => {
     searchInputRef.current?.focus();
-  }, [placeState.form.mode]);
+  }, [placeState.appMode]);
 
   return (
     <main className="flex h-[90vh] flex-col p-4 md:m-auto md:h-[100vh] md:max-w-[600px] lg:max-w-[800px]">
       <AppHeader
-        formMode={placeState.form.mode}
-        buttonLabel={placeState.form.mode === 'initial' ? 'Lieux' : 'Trouver'}
+        formMode={placeState.appMode}
+        buttonLabel={
+          placeState.appMode === 'initial' ? 'Chercher un lieu' : 'Mes lieux'
+        }
         onChangeMode={() => handleAppChangeModeClick()}
       />
       <PlaceContext value={placeState}>

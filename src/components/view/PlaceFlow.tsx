@@ -8,9 +8,9 @@ import type {
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
-import { AddingDetailsView } from './AddingDetailsView';
-import { PlaceSearch } from './InitialView';
-import { SubmitedView } from './SubmitedView';
+import { FormAddingDetailsView } from './FormAddingDetailsView';
+import { PlaceSearch } from './FormSearchView';
+import { IPlacesListView } from './PlacesListView';
 
 type IPlaceFlowProps = {
   searchInputRef: Ref<HTMLInputElement | null>;
@@ -27,27 +27,28 @@ export const PlaceFlow = ({
   const placeState = useContext(PlaceContext);
   const placeReducerAction = useContext(PlaceDispatchContext);
 
-  switch (placeState?.form.mode) {
+  switch (placeState?.appMode) {
     case 'initial':
-      return <PlaceSearch inputRef={searchInputRef} />;
-
-    case 'adding_details':
       return (
-        <AddingDetailsView
+        <IPlacesListView
+          places={placeState.savedPlacesList.place}
+          categories={placeState.savedPlacesList.categories}
+          reducerDispatchAction={placeReducerAction}
+        />
+      );
+
+    case 'form_search': {
+      return <PlaceSearch inputRef={searchInputRef} />;
+    }
+
+    case 'form_adding_details':
+      return (
+        <FormAddingDetailsView
           placeSelected={placeSelected}
           formTag={formTags}
           reducerDispatchAction={placeReducerAction}
         />
       );
-
-    case 'submited': {
-      return (
-        <SubmitedView
-          places={placeState.savedPlacesList.place}
-          categories={placeState.savedPlacesList.categories}
-        />
-      );
-    }
 
     default:
       break;

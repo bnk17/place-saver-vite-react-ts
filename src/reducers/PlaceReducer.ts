@@ -1,13 +1,13 @@
 // initial state
 
 import type {
-  IFormMode,
+  IAppMode,
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
 
 //actions
-type SetUpdateFormMode = { type: 'Set_Update_Form_Mode'; payload: IFormMode };
+type SetUpdateFormMode = { type: 'Set_Update_App_Mode'; payload: IAppMode };
 type SetSelectPlace = { type: 'Set_Select_Place'; payload: IPlaceData };
 type SetSavePlace = { type: 'Set_Save_Place'; payload: IPlaceData };
 type SetDeletePlace = { type: 'Set_Delete_Place'; payload: IPlaceData['name'] };
@@ -26,8 +26,8 @@ export type IPlaceReducerAction =
   | SetDeleteCategory;
 
 export const placeInitialState: IPlaceReducerState = {
+  appMode: 'initial',
   form: {
-    mode: 'initial',
     selectedPlace: undefined,
     categories: [],
   },
@@ -45,18 +45,18 @@ export const PlaceReducer = (
   if (action === null) return state;
 
   switch (action.type) {
-    case 'Set_Update_Form_Mode': {
+    case 'Set_Update_App_Mode': {
       return {
         ...state,
-        form: { ...state.form, mode: action.payload },
+        appMode: action.payload,
       };
     }
     case 'Set_Select_Place': {
       return {
         ...state,
+        appMode: 'form_adding_details',
         form: {
           ...state.form,
-          mode: 'adding_details',
           selectedPlace: action.payload,
         },
       };
@@ -74,9 +74,9 @@ export const PlaceReducer = (
     case 'Set_Save_Place': {
       return {
         ...state,
+        appMode: 'initial',
         form: {
           ...state.form,
-          mode: 'submited',
         },
         savedPlacesList: {
           place: [...state.savedPlacesList.place, action.payload],
