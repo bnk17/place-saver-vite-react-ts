@@ -1,10 +1,15 @@
 import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
-import type { IPlaceCategory, IPlaceData } from 'src/shared/types';
+import type {
+  IPlaceCategory,
+  IPlaceData,
+  IPlaceReducerState,
+} from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagManager } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
 
 type IFormAddingDetailsViewProps = {
+  appMode: IPlaceReducerState['appMode'];
   placeSelected: IPlaceData | undefined;
   formTag: IPlaceCategory[];
   reducerDispatchAction: React.ActionDispatch<
@@ -12,6 +17,7 @@ type IFormAddingDetailsViewProps = {
   > | null;
 };
 export const FormAddingDetailsView = ({
+  appMode,
   placeSelected,
   formTag: formCategories,
   reducerDispatchAction,
@@ -27,7 +33,7 @@ export const FormAddingDetailsView = ({
       <TagManager
         tags={formCategories}
         onTagChange={reducerDispatchAction}
-        mode="form"
+        mode={appMode}
       />
       <Button
         onClick={() => {
@@ -41,13 +47,9 @@ export const FormAddingDetailsView = ({
                 googleMapsUrl: placeSelected.googleMapsUrl,
               },
             });
-            reducerDispatchAction({
-              type: 'Set_Update_App_Mode',
-              payload: 'initial',
-            });
           }
         }}
-        className="absolute bottom-0 w-full bg-zinc-900"
+        className="absolute bottom-0 left-0 w-full bg-zinc-900"
       >
         Sauvegarder le lieu
       </Button>

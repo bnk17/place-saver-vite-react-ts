@@ -7,6 +7,7 @@ import type {
 } from 'src/shared/types';
 
 //actions
+type ResetForm = { type: 'Reset_Form' };
 type SetUpdateFormMode = { type: 'Set_Update_App_Mode'; payload: IAppMode };
 type SetSelectPlace = { type: 'Set_Select_Place'; payload: IPlaceData };
 type SetSavePlace = { type: 'Set_Save_Place'; payload: IPlaceData };
@@ -23,7 +24,8 @@ export type IPlaceReducerAction =
   | SetSavePlace
   | SetDeletePlace
   | SetPlaceCategories
-  | SetDeleteCategory;
+  | SetDeleteCategory
+  | ResetForm;
 
 export const placeInitialState: IPlaceReducerState = {
   appMode: 'initial',
@@ -31,10 +33,7 @@ export const placeInitialState: IPlaceReducerState = {
     selectedPlace: undefined,
     categories: [],
   },
-  savedPlacesList: {
-    place: [],
-    categories: [],
-  },
+  savedPlacesList: [],
 };
 
 //reducer function
@@ -75,25 +74,25 @@ export const PlaceReducer = (
       return {
         ...state,
         appMode: 'initial',
-        form: {
-          ...state.form,
-        },
-        savedPlacesList: {
-          place: [...state.savedPlacesList.place, action.payload],
-          categories: [...state.form.categories],
-        },
+        form: placeInitialState.form,
+        savedPlacesList: [
+          ...state.savedPlacesList,
+          {
+            place: action.payload,
+            categories: [...state.form.categories],
+          },
+        ],
       };
     }
 
     case 'Set_Delete_Place': {
+      const filteredPlaces = state.savedPlacesList.filter(({ place }) => {
+        return place?.name !== action.payload;
+      });
+
       return {
         ...state,
-        savedPlacesList: {
-          place: state.savedPlacesList.place.filter((place) => {
-            return place.name !== action.payload;
-          }),
-          categories: [],
-        },
+        savedPlacesList: filteredPlaces,
       };
     }
 
@@ -106,6 +105,14 @@ export const PlaceReducer = (
             return cat.name !== action.payload;
           }),
         },
+      };
+    }
+
+    case 'Reset_Form': {
+      return {
+        appMode: 'initial',
+        form: placeInitialState.form,
+        savedPlacesList: state.savedPlacesList,
       };
     }
 
