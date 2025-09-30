@@ -45,6 +45,7 @@ export function App() {
         <PlaceDispatchContext value={placeDispatchAction}>
           <section className="relative h-full">
             <PlaceFlow
+              appMode={placeState.appMode}
               searchInputRef={searchInputRef}
               placeSelected={placeState.form.selectedPlace}
               formTags={placeState.form.categories}

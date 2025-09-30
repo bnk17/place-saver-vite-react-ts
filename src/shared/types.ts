@@ -31,7 +31,7 @@ export type IPlaceReducerState = {
     categories: IPlaceCategory[];
   };
   savedPlacesList: {
-    place: IPlaceData[];
+    place: IPlaceData;
     categories: IPlaceCategory[];
-  };
+  }[];
 };

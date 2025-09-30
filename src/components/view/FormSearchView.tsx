@@ -106,11 +106,9 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           additionalInfo
         );
 
-        const isNameExist = placeState?.savedPlacesList.place.some(
-          ({ name }) => {
-            return name === placeData.name;
-          }
-        );
+        const isNameExist = placeState?.savedPlacesList.some(({ place }) => {
+          return place.name === placeData.name;
+        });
 
         if (isNameExist) {
           throw new Error('Ce lieu à déjà été ajouté.');

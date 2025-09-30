@@ -13,6 +13,7 @@ import { PlaceSearch } from './FormSearchView';
 import { IPlacesListView } from './PlacesListView';
 
 type IPlaceFlowProps = {
+  appMode: IPlaceReducerState['appMode'];
   searchInputRef: Ref<HTMLInputElement | null>;
   placeSelected: IPlaceData | undefined;
   formTags: IPlaceCategory[];
@@ -20,6 +21,7 @@ type IPlaceFlowProps = {
 };
 
 export const PlaceFlow = ({
+  appMode,
   searchInputRef,
   placeSelected,
   formTags,
@@ -31,8 +33,7 @@ export const PlaceFlow = ({
     case 'initial':
       return (
         <IPlacesListView
-          places={placeState.savedPlacesList.place}
-          categories={placeState.savedPlacesList.categories}
+          places={placeState.savedPlacesList}
           reducerDispatchAction={placeReducerAction}
         />
       );
@@ -44,6 +45,7 @@ export const PlaceFlow = ({
     case 'form_adding_details':
       return (
         <FormAddingDetailsView
+          appMode={appMode}
           placeSelected={placeSelected}
           formTag={formTags}
           reducerDispatchAction={placeReducerAction}
