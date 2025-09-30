@@ -6,7 +6,7 @@ export type IPlaceCategory = {
 export type IPlaceData = {
   name: string;
   adress: string;
-  categories?: IPlaceCategory[];
+  categories?: string;
   additionnalInfo?: string;
   imgSrc?: string;
   // Optional Google Maps specific fields
