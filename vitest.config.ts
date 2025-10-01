@@ -1,15 +1,11 @@
-import tailwindcss from '@tailwindcss/vite';
+/// <reference types="vitest" />
+
 import react from '@vitejs/plugin-react';
 import * as path from 'path';
 import { defineConfig } from 'vitest/config';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    host: 'localhost',
-    port: 3000,
-  },
+  plugins: [react()],
   resolve: {
     alias: {
       src: path.resolve(__dirname, 'src'),
@@ -19,6 +15,18 @@ export default defineConfig({
       reducers: path.resolve(__dirname, 'src/reducers'),
       context: path.resolve(__dirname, 'src/context'),
       utils: path.resolve(__dirname, 'src/utils'),
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: './src/tests/setup.ts',
+    // Include only integration tests (unit and component tests)
+    include: ['src/tests/unit/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    // Explicitly exclude e2e tests to avoid conflicts with Playwright
+    exclude: ['src/tests/e2e/**/*', 'node_modules/**/*'],
+    coverage: {
+      include: ['src/**/*'],
+      exclude: ['src/tests/**/*', 'src/**/*.d.ts'],
     },
   },
 });
