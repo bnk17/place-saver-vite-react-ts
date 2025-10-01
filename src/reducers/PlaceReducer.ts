@@ -12,9 +12,9 @@ type SetUpdateFormMode = { type: 'Set_Update_App_Mode'; payload: IAppMode };
 type SetSelectPlace = { type: 'Set_Select_Place'; payload: IPlaceData };
 type SetSavePlace = { type: 'Set_Save_Place'; payload: IPlaceData };
 type SetDeletePlace = { type: 'Set_Delete_Place'; payload: IPlaceData['name'] };
-type SetDeleteCategory = { type: 'Set_Delete_Category'; payload: string };
-type SetPlaceCategories = {
-  type: 'Set_Place_Categories';
+type SetDeleteTag = { type: 'Set_Delete_Tag'; payload: string };
+type SetPlaceTags = {
+  type: 'Set_Place_Tags';
   payload: string;
 };
 
@@ -23,8 +23,8 @@ export type IPlaceReducerAction =
   | SetSelectPlace
   | SetSavePlace
   | SetDeletePlace
-  | SetPlaceCategories
-  | SetDeleteCategory
+  | SetPlaceTags
+  | SetDeleteTag
   | ResetForm;
 
 export const placeInitialState: IPlaceReducerState = {
@@ -61,7 +61,7 @@ export const PlaceReducer = (
       };
     }
 
-    case 'Set_Place_Categories':
+    case 'Set_Place_Tags':
       return {
         ...state,
         form: {
@@ -96,7 +96,7 @@ export const PlaceReducer = (
       };
     }
 
-    case 'Set_Delete_Category': {
+    case 'Set_Delete_Tag': {
       return {
         ...state,
         form: {
