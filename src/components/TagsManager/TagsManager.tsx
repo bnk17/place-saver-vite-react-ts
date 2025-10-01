@@ -45,7 +45,7 @@ export const TagManager = ({
     if (!tagInput) return;
     if (onTagChange) {
       onTagChange({
-        type: 'Set_Place_Categories',
+        type: 'Set_Place_Tags',
         payload: tagInput,
       });
     }
@@ -61,7 +61,7 @@ export const TagManager = ({
   const handleRemoveTag = (name: string) => {
     if (mode === 'form_adding_details' && dispatch) {
       dispatch({
-        type: 'Set_Delete_Category',
+        type: 'Set_Delete_Tag',
         payload: name,
       });
     }
