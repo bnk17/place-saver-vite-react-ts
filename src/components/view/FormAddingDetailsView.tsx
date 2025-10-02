@@ -1,4 +1,4 @@
-import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
+import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import type {
   IPlaceTag,
   IPlaceData,
