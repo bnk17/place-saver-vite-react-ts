@@ -1,4 +1,4 @@
-import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
+import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import type { IPlaceReducerState } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagItem } from '../TagsManager/TagsManager';
