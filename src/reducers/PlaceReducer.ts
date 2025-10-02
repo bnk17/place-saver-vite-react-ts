@@ -37,7 +37,7 @@ export const placeInitialState: IPlaceReducerState = {
 };
 
 //reducer function
-export const PlaceReducer = (
+export const placeReducer = (
   state: IPlaceReducerState,
   action: IPlaceReducerAction
 ): IPlaceReducerState => {

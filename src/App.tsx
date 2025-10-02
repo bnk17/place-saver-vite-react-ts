@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import { PlaceReducer, placeInitialState } from 'src/reducers/PlaceReducer';
+import { placeReducer, placeInitialState } from 'src/reducers/PlaceReducer';
 import './App.css';
 import { AppHeader } from './components/Header/Header';
 import { PlaceFlow } from './components/view/PlaceFlow';
@@ -11,7 +11,7 @@ import {
 export function App() {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [placeState, placeDispatchAction] = useReducer(
-    PlaceReducer,
+    placeReducer,
     placeInitialState
   );
 

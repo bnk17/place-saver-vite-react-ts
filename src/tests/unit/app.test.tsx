@@ -1,4 +1,4 @@
-import { PlaceReducer } from 'src/reducers/PlaceReducer';
+import { placeReducer } from 'src/reducers/PlaceReducer';
 import type { IPlaceReducerState } from 'src/shared/types';
 import { describe, expect, test } from 'vitest';
 
@@ -14,7 +14,7 @@ describe('Test all actions of placeReducer ', () => {
   };
 
   test('should update the appMode to form_adding_details', () => {
-    const result = PlaceReducer(initialState, {
+    const result = placeReducer(initialState, {
       type: 'Set_Update_App_Mode',
       payload: 'form_adding_details',
     });
@@ -22,7 +22,7 @@ describe('Test all actions of placeReducer ', () => {
   });
 
   test("the test shouldn't pass if the value expected is not form_adding_details", () => {
-    const result = PlaceReducer(initialState, {
+    const result = placeReducer(initialState, {
       type: 'Set_Update_App_Mode',
       payload: 'form_adding_details',
     });

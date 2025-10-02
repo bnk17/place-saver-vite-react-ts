@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { PlaceReducer, placeInitialState } from 'src/reducers/PlaceReducer';
+import { placeReducer, placeInitialState } from 'src/reducers/PlaceReducer';
 import { PlaceContext, PlaceDispatchContext } from './PlacesContext';
 
 type IPlaceProviderProps = {
@@ -7,7 +7,7 @@ type IPlaceProviderProps = {
 };
 
 export function PlaceProvider({ children }: IPlaceProviderProps) {
-  const [state, dispatch] = useReducer(PlaceReducer, placeInitialState);
+  const [state, dispatch] = useReducer(placeReducer, placeInitialState);
 
   return (
     <PlaceContext value={state}>
