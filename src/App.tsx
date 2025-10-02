@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import { placeReducer, placeInitialState } from 'src/reducers/PlaceReducer';
+import { placeReducer, placeInitialState } from 'src/reducers/placeReducer';
 import './App.css';
 import { AppHeader } from './components/Header/Header';
 import { PlaceFlow } from './components/view/PlaceFlow';

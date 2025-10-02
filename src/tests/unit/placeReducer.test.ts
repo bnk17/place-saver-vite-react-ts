@@ -1,4 +1,4 @@
-import { placeReducer } from 'src/reducers/PlaceReducer';
+import { placeReducer } from 'src/reducers/placeReducer';
 import type { IPlaceData, IPlaceReducerState } from 'src/shared/types';
 import { describe, expect, test } from 'vitest';
 
