@@ -1,5 +1,5 @@
+import { placeInitialState, placeReducer } from 'src/reducers/placeReducer';
 import { useEffect, useReducer, useRef } from 'react';
-import { placeReducer, placeInitialState } from 'src/reducers/placeReducer';
 import './App.css';
 import { AppHeader } from './components/Header/Header';
 import { PlaceFlow } from './components/view/PlaceFlow';
@@ -8,13 +8,18 @@ import {
   PlaceDispatchContext,
 } from './context/Places/PlacesContext';
 
+import {
+  LocationFavourite02Icon,
+  SearchList01Icon,
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+
 export function App() {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [placeState, placeDispatchAction] = useReducer(
     placeReducer,
     placeInitialState
   );
-
   function handleAppChangeModeClick() {
     if (placeState.appMode === 'initial') {
       placeDispatchAction({
@@ -34,10 +39,20 @@ export function App() {
     <main className="flex h-[90vh] flex-col p-4 md:m-auto md:h-[100vh] md:max-w-[600px] lg:max-w-[800px]">
       <AppHeader
         formMode={placeState.appMode}
-        buttonLabel={
-          placeState.appMode === 'initial'
-            ? 'Rechercher un spot'
-            : '📍 Mes spots'
+        buttonIcon={
+          placeState.appMode === 'initial' ? (
+            <HugeiconsIcon
+              icon={SearchList01Icon}
+              strokeWidth={2}
+              className="text-zinc-900"
+            />
+          ) : (
+            <HugeiconsIcon
+              icon={LocationFavourite02Icon}
+              strokeWidth={2}
+              className="text-zinc-900"
+            />
+          )
         }
         onChangeMode={() => handleAppChangeModeClick()}
       />

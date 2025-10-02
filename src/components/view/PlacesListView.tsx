@@ -3,6 +3,8 @@ import type { IPlaceReducerState } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagItem } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
+import { LocationFavourite02Icon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 
 type IPlacesListViewProps = {
   places: IPlaceReducerState['savedPlacesList'];
@@ -17,7 +19,17 @@ export const IPlacesListView = ({
   if (places.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
-        <p className="text-lg">Aucun spot n'a été enregistré</p>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <span>
+            <HugeiconsIcon
+              icon={LocationFavourite02Icon}
+              strokeWidth={2}
+              size={50}
+              className="text-gray-400"
+            />
+          </span>
+          Aucun spot n'a été enregistré...
+        </div>
         <Button
           className="bg-zinc-900"
           onClick={() => {
