@@ -5,6 +5,8 @@
       "name": "test-form",
       "dependencies": {
         "@googlemaps/js-api-loader": "^1.16.10",
+        "@hugeicons/core-free-icons": "^1.1.0",
+        "@hugeicons/react": "^1.1.1",
         "@neondatabase/serverless": "^1.0.1",
         "clsx": "^2.1.1",
         "dotenv": "^17.2.2",
@@ -224,6 +226,10 @@
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.3.3", "", { "dependencies": { "@eslint/core": "^0.15.1", "levn": "^0.4.1" } }, "sha512-1+WqvgNMhmlAambTvT3KPtCl/Ibr68VldY2XY40SL1CE0ZXiakFR/cbTspaF5HsnpDMvcYYoJHfl4980NBjGag=="],
 
     "@googlemaps/js-api-loader": ["@googlemaps/js-api-loader@1.16.10", "", {}, "sha512-c2erv2k7P2ilYzMmtYcMgAR21AULosQuUHJbStnrvRk2dG93k5cqptDrh9A8p+ZNlyhiqEOgHW7N9PAizdUM7Q=="],
+
+    "@hugeicons/core-free-icons": ["@hugeicons/core-free-icons@1.1.0", "", {}, "sha512-xLLQcIiLKvazXjjhnO2qZ/piOo9yxAFQ5A67XP+HNpvFrO5hVEGv1qebHSHPK1tbSST9dZF3fhH4AfdyumqJsg=="],
+
+    "@hugeicons/react": ["@hugeicons/react@1.1.1", "", { "peerDependencies": { "react": ">=16.0.0" } }, "sha512-BAbFVtx0XZ/yF2poPLFn0N9Ji6ebV/MpI5+WRqooFp3smQDwpL+72m+BBs4KAM5djgWUpg12weyc5SJtTsOwsw=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
