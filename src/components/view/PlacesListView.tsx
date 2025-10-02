@@ -36,7 +36,7 @@ export const IPlacesListView = ({
 
   return (
     <div className="mt-10 flex flex-col gap-2">
-      {places.map(({ place, categories }) => {
+      {places.map(({ place, tags: categories }) => {
         return (
           <div key={place.name} className="border-b-1 border-gray-200">
             <PlaceItem

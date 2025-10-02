@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
 import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
 import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
-import type { IPlaceCategory, IPlaceReducerState } from 'src/shared/types';
+import type { IPlaceTag, IPlaceReducerState } from 'src/shared/types';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 
-type Tag = IPlaceCategory; // keeping type compatible, just renamed
+type Tag = IPlaceTag; // keeping type compatible, just renamed
 
 // Individual Tag display component
 type TagItemProps = {

@@ -31,7 +31,7 @@ export const placeInitialState: IPlaceReducerState = {
   appMode: 'initial',
   form: {
     selectedPlace: undefined,
-    categories: [],
+    tags: [],
   },
   savedPlacesList: [],
 };
@@ -66,7 +66,7 @@ export const PlaceReducer = (
         ...state,
         form: {
           ...state.form,
-          categories: [...state.form.categories, { name: action.payload }],
+          tags: [...state.form.tags, { name: action.payload }],
         },
       };
 
@@ -79,7 +79,7 @@ export const PlaceReducer = (
           ...state.savedPlacesList,
           {
             place: action.payload,
-            categories: [...state.form.categories],
+            tags: [...state.form.tags],
           },
         ],
       };
@@ -101,7 +101,7 @@ export const PlaceReducer = (
         ...state,
         form: {
           ...state.form,
-          categories: state.form.categories.filter((cat) => {
+          tags: state.form.tags.filter((cat) => {
             return cat.name !== action.payload;
           }),
         },
