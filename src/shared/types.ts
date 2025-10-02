@@ -1,5 +1,5 @@
 // place form categories
-export type IPlaceCategory = {
+export type IPlaceTag = {
   name: string;
 };
 
@@ -28,10 +28,10 @@ export type IPlaceReducerState = {
   appMode: IAppMode;
   form: {
     selectedPlace: IPlaceData | undefined;
-    categories: IPlaceCategory[];
+    tags: IPlaceTag[];
   };
   savedPlacesList: {
     place: IPlaceData;
-    categories: IPlaceCategory[];
+    tags: IPlaceTag[];
   }[];
 };

@@ -1,11 +1,11 @@
 import type { GooglePlaceDetails } from '../services/googleMapsService';
-import type { IPlaceData, IPlaceCategory } from '../shared/types';
+import type { IPlaceData, IPlaceTag } from '../shared/types';
 
 /**
  * Convert Google Maps place types to categories
  * Maps Google's place types to user-friendly category names
  */
-export function mapGoogleTypesToCategories(types: string[]): IPlaceCategory[] {
+export function mapGoogleTypesToCategories(types: string[]): IPlaceTag[] {
   const typeMapping: Record<string, string> = {
     restaurant: 'Restaurant',
     food: 'Restaurant',
@@ -36,7 +36,7 @@ export function mapGoogleTypesToCategories(types: string[]): IPlaceCategory[] {
     bus_station: 'Transportation',
   };
 
-  const categories: IPlaceCategory[] = [];
+  const categories: IPlaceTag[] = [];
   const addedCategories = new Set<string>();
 
   // Convert Google types to categories
@@ -71,7 +71,7 @@ export function convertGooglePlaceToIPlaceData(
   const categories = mapGoogleTypesToCategories(googlePlace.types);
 
   return {
-    categories,
+    categories: categories.map((cat) => cat.name).toString(),
     name: googlePlace.name,
     adress: googlePlace.formattedAddress,
     additionnalInfo: additionalInfo || '',

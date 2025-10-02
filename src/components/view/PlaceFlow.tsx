@@ -4,7 +4,7 @@ import {
   PlaceDispatchContext,
 } from 'src/context/Places/PlacesContext';
 import type {
-  IPlaceCategory,
+  IPlaceTag,
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
@@ -16,7 +16,7 @@ type IPlaceFlowProps = {
   appMode: IPlaceReducerState['appMode'];
   searchInputRef: Ref<HTMLInputElement | null>;
   placeSelected: IPlaceData | undefined;
-  formTags: IPlaceCategory[];
+  formTags: IPlaceTag[];
   placesSavedList: IPlaceReducerState['savedPlacesList'];
 };
 

@@ -1,6 +1,6 @@
 import type { IPlaceReducerAction } from 'src/reducers/PlaceReducer';
 import type {
-  IPlaceCategory,
+  IPlaceTag,
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
@@ -11,7 +11,7 @@ import { Button } from '../ui/Button';
 type IFormAddingDetailsViewProps = {
   appMode: IPlaceReducerState['appMode'];
   placeSelected: IPlaceData | undefined;
-  formTag: IPlaceCategory[];
+  formTag: IPlaceTag[];
   reducerDispatchAction: React.ActionDispatch<
     [action: IPlaceReducerAction]
   > | null;

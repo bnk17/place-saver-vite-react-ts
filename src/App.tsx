@@ -48,7 +48,7 @@ export function App() {
               appMode={placeState.appMode}
               searchInputRef={searchInputRef}
               placeSelected={placeState.form.selectedPlace}
-              formTags={placeState.form.categories}
+              formTags={placeState.form.tags}
               placesSavedList={placeState.savedPlacesList}
             />
           </section>
