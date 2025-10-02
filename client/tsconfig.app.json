@@ -34,5 +34,5 @@
     }
   },
 
-  "include": ["src"]
+  "include": ["src", "../server/src/db/schema.ts", "../server/src/db/db.ts"]
 }

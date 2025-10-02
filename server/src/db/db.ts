@@ -4,4 +4,4 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: './.env.local' });
 
-export const db = drizzle(process.env.VITE_DATABASE_URL!, { schema });
+export const db = drizzle(process.env.DATABASE_URL!, { schema });
