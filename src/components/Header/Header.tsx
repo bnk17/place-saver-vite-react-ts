@@ -2,13 +2,13 @@ import type { IPlaceReducerState } from 'src/shared/types';
 import { Button } from '../ui/Button';
 
 type IAppHeaderProps = {
-  buttonLabel: string;
+  buttonIcon: React.ReactNode;
   formMode: IPlaceReducerState['appMode'];
   onChangeMode: () => void;
 };
 export const AppHeader = ({
   formMode,
-  buttonLabel,
+  buttonIcon,
   onChangeMode,
 }: IAppHeaderProps) => {
   return (
@@ -21,7 +21,7 @@ export const AppHeader = ({
           variant="ghost"
           onClick={() => onChangeMode()}
         >
-          {buttonLabel}
+          {buttonIcon}
         </Button>
       )}
     </section>
