@@ -5,6 +5,7 @@ import { TagItem } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
 import { LocationFavourite02Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import { useGetPlaces } from 'src/api/places';
 
 type IPlacesListViewProps = {
   places: IPlaceReducerState['savedPlacesList'];
@@ -13,10 +14,10 @@ type IPlacesListViewProps = {
   > | null;
 };
 export const IPlacesListView = ({
-  places,
   reducerDispatchAction,
 }: IPlacesListViewProps) => {
-  if (places.length === 0) {
+  const { data } = useGetPlaces();
+  if (data?.data === undefined || data.data.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
         <div className="flex flex-col items-center gap-2 text-center">
@@ -48,7 +49,7 @@ export const IPlacesListView = ({
 
   return (
     <div className="mt-10 flex flex-col gap-2">
-      {places.map(({ place, tags: categories }) => {
+      {data.data.map((place) => {
         return (
           <div key={place.name} className="border-b-1 border-gray-200">
             <PlaceItem
@@ -56,9 +57,10 @@ export const IPlacesListView = ({
               adress={place.adress}
               imgSrc={place.imgSrc}
               googleMapsUrl={place.googleMapsUrl}
+              website={place.website}
             />
             <div className="mb-2 flex flex-wrap gap-1">
-              {categories.map((tag) => {
+              {place.tags.map((tag) => {
                 return <TagItem key={tag.name} tag={tag} />;
               })}
             </div>
