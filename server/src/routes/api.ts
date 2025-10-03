@@ -5,6 +5,131 @@ import { eq, inArray } from 'drizzle-orm';
 
 const api = new Hono();
 
+// Get all places with their tags
+api.get('/places', async (c) => {
+  try {
+    const allPlaces = await db.select().from(places);
+
+    // Get all place IDs
+    const placeIds = allPlaces.map((place) => place.id);
+
+    // Get all place-tag relationships
+    const placeTagRelations = await db
+      .select()
+      .from(placeTags)
+      .where(inArray(placeTags.placeId, placeIds));
+
+    // Get all tag IDs
+    const tagIds = placeTagRelations.map((relation) => relation.tagId);
+
+    // Get all tags
+    const allTags =
+      tagIds.length > 0
+        ? await db.select().from(customTags).where(inArray(customTags.id, tagIds))
+        : [];
+
+    // Create a map of tagId -> tag
+    const tagMap = new Map(allTags.map((tag) => [tag.id, tag]));
+
+    // Create a map of placeId -> tags
+    const placeTagsMap = new Map<number, (typeof customTags.$inferSelect)[]>();
+    for (const relation of placeTagRelations) {
+      const tag = tagMap.get(relation.tagId);
+      if (tag) {
+        if (!placeTagsMap.has(relation.placeId)) {
+          placeTagsMap.set(relation.placeId, []);
+        }
+        placeTagsMap.get(relation.placeId)!.push(tag);
+      }
+    }
+
+    // Combine places with their tags
+    const placesWithTags = allPlaces.map((place) => ({
+      ...place,
+      tags: placeTagsMap.get(place.id) || [],
+    }));
+
+    return c.json(
+      {
+        success: true,
+        data: placesWithTags,
+      },
+      200
+    );
+  } catch (error) {
+    console.error('Error fetching places:', error);
+    return c.json(
+      {
+        success: false,
+        error: 'Failed to fetch places',
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+      500
+    );
+  }
+});
+
+// Get a single place by ID with its tags
+api.get('/places/:id', async (c) => {
+  try {
+    const id = parseInt(c.req.param('id'));
+
+    if (isNaN(id)) {
+      return c.json(
+        {
+          success: false,
+          error: 'Invalid place ID',
+        },
+        400
+      );
+    }
+
+    const [place] = await db.select().from(places).where(eq(places.id, id));
+
+    if (!place) {
+      return c.json(
+        {
+          success: false,
+          error: 'Place not found',
+        },
+        404
+      );
+    }
+
+    // Get tags for this place
+    const placeTagRelations = await db.select().from(placeTags).where(eq(placeTags.placeId, id));
+
+    const tagIds = placeTagRelations.map((relation) => relation.tagId);
+
+    const tags =
+      tagIds.length > 0
+        ? await db.select().from(customTags).where(inArray(customTags.id, tagIds))
+        : [];
+
+    const placeWithTags = {
+      ...place,
+      tags,
+    };
+
+    return c.json(
+      {
+        success: true,
+        data: placeWithTags,
+      },
+      200
+    );
+  } catch (error) {
+    console.error('Error fetching place:', error);
+    return c.json(
+      {
+        success: false,
+        error: 'Failed to fetch place',
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+      500
+    );
+  }
+});
 // Create a new place
 api.post('/places', async (c) => {
   try {
