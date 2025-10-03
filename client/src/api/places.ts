@@ -1,4 +1,4 @@
-import { post } from 'src/lib/api';
+import { post, useGet } from 'src/lib/api';
 import { type IPlaceData, type IPlaceTag } from 'src/shared/types';
 
 /**
@@ -6,15 +6,26 @@ import { type IPlaceData, type IPlaceTag } from 'src/shared/types';
  * Creates a place item in db.
  */
 
-type SavePlaceDTO = IPlaceData & { tags: IPlaceTag[] };
-type SavePlaceResponse = {
+type PlaceDTO = IPlaceData & { tags: IPlaceTag[] };
+type ApiResponseDTO<T> = {
   success: boolean;
-  error: string;
-  cause: string;
+  data?: T;
+  error?: string;
+  cause?: string;
 };
-export const savePlace = (placeInfo: SavePlaceDTO) => {
+export const savePlace = (placeInfo: PlaceDTO) => {
   const body = placeInfo;
-  const response = post<SavePlaceResponse>('api/places', body);
+  const response = post('api/places', body);
+
+  return response;
+};
+
+/**
+ * GET /api/places
+ * Fetch all places
+ */
+export const useGetPlaces = () => {
+  const response = useGet<ApiResponseDTO<PlaceDTO[]>>('api/places');
 
   return response;
 };
