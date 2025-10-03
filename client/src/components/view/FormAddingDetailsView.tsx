@@ -7,6 +7,7 @@ import type {
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagManager } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
+import { savePlace } from 'src/api/places';
 
 type IFormAddingDetailsViewProps = {
   appMode: IPlaceReducerState['appMode'];
@@ -16,13 +17,16 @@ type IFormAddingDetailsViewProps = {
     [action: IPlaceReducerAction]
   > | null;
 };
+
 export const FormAddingDetailsView = ({
   appMode,
   placeSelected,
-  formTag: formCategories,
+  formTag,
   reducerDispatchAction,
 }: IFormAddingDetailsViewProps) => {
   if (placeSelected === undefined) return;
+  const { adress, name, googleMapsUrl, imgSrc, website, rating, phoneNumber } =
+    placeSelected;
   return (
     <div className="mt-5">
       <PlaceItem
@@ -31,23 +35,34 @@ export const FormAddingDetailsView = ({
         imgSrc={placeSelected.imgSrc}
       />
       <TagManager
-        tags={formCategories}
+        tags={formTag}
         onTagChange={reducerDispatchAction}
         mode={appMode}
       />
       <Button
         onClick={() => {
-          if (reducerDispatchAction !== null) {
-            reducerDispatchAction({
-              type: 'Set_Save_Place',
-              payload: {
-                adress: placeSelected.adress,
-                name: placeSelected.name,
-                imgSrc: placeSelected.imgSrc,
-                googleMapsUrl: placeSelected.googleMapsUrl,
-              },
+          savePlace({
+            adress,
+            name,
+            googleMapsUrl,
+            imgSrc,
+            website,
+            rating,
+            phoneNumber,
+            tags: formTag,
+          })
+            .then(() => {
+              if (reducerDispatchAction !== null) {
+                reducerDispatchAction({
+                  type: 'Set_Update_App_Mode',
+                  payload: 'initial',
+                });
+                reducerDispatchAction({ type: 'Reset_Form' });
+              }
+            })
+            .catch((e) => {
+              if (e instanceof Error) console.log(e.cause);
             });
-          }
         }}
         className="absolute bottom-0 left-0 w-full bg-zinc-900"
       >

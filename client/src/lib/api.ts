@@ -3,7 +3,7 @@ import useSWR, { type SWRConfiguration, type SWRResponse } from 'swr';
 
 // Configure ky instance with default options
 const rmndApiClient: KyInstance = ky.create({
-  prefixUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
+  prefixUrl: 'http://localhost:4000',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',

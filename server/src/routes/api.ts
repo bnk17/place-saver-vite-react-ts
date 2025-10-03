@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { db } from '../db/db';
 import { customTags, places, placeTags } from '../db/schema';
 import { eq, inArray } from 'drizzle-orm';
+import { HTTPException } from 'hono/http-exception';
 
 const api = new Hono();
 
@@ -131,9 +132,10 @@ api.get('/places/:id', async (c) => {
   }
 });
 // Create a new place
+// Create a new place
 api.post('/places', async (c) => {
   try {
-    const body: typeof places.$inferInsert & { tags?: string[] } = await c.req.json();
+    const body: typeof places.$inferInsert & { tags?: { name: string }[] } = await c.req.json();
 
     // Validate required fields
     if (!body.name || !body.adress) {
@@ -144,6 +146,12 @@ api.post('/places', async (c) => {
         },
         400
       );
+    }
+    // Get existing place with the same name
+    const existingPlace = await db.select().from(places).where(eq(places.name, body.name));
+    if (existingPlace.length > 0) {
+      c.status(409);
+      throw new HTTPException(409, { message: 'Ce spot a déjà été rajouté', cause: 'duplicate' });
     }
 
     // Insert the place into the database
@@ -167,17 +175,20 @@ api.post('/places', async (c) => {
 
     // Handle tags if provided
     if (body.tags && body.tags.length > 0) {
+      // Extract tag names from the array of objects
+      const tagNames = body.tags.map((tag) => tag.name);
+
       // Get existing tags
       const existingTags = await db
         .select()
         .from(customTags)
-        .where(inArray(customTags.name, body.tags));
+        .where(inArray(customTags.name, tagNames));
 
       const existingTagNames = existingTags.map((tag) => tag.name);
       const existingTagIds = existingTags.map((tag) => tag.id);
 
       // Find new tags that don't exist yet
-      const newTagNames = body.tags.filter((tagName) => !existingTagNames.includes(tagName));
+      const newTagNames = tagNames.filter((tagName) => !existingTagNames.includes(tagName));
 
       // Insert new tags
       let newTagIds: number[] = [];
@@ -212,14 +223,11 @@ api.post('/places', async (c) => {
     );
   } catch (error) {
     console.error('Error creating place:', error);
-    return c.json(
-      {
-        success: false,
-        error: 'Failed to create place',
-        message: error instanceof Error ? error.message : 'Unknown error',
-      },
-      500
-    );
+    return c.json({
+      success: false,
+      error: 'Failed to create place',
+      message: error instanceof Error ? error.message : 'Unknown error',
+    });
   }
 });
 
