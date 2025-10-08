@@ -1,11 +1,11 @@
-import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
-import type { IPlaceReducerState } from 'src/shared/types';
-import { PlaceItem } from '../PlaceDetails/PlaceDetails';
-import { TagItem } from '../TagsManager/TagsManager';
-import { Button } from '../ui/Button';
 import { LocationFavourite02Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { useGetPlaces } from 'src/api/places';
+import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
+import type { IPlaceReducerState } from 'src/shared/types';
+import { PlaceItem } from '../PlaceDetails/PlaceDetails';
+import { Button } from '../ui/Button';
+import { TagItem } from '../TagsManager/TagsManager';
 
 type IPlacesListViewProps = {
   places: IPlaceReducerState['savedPlacesList'];
@@ -48,7 +48,7 @@ export const IPlacesListView = ({
   }
 
   return (
-    <div className="mt-10 flex flex-col gap-2">
+    <div className="mt-5 flex h-[750px] flex-col gap-2 overflow-y-scroll pb-5">
       {data.data.map((place) => {
         return (
           <div key={place.name} className="border-b-1 border-gray-200">
