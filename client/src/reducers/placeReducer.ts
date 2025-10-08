@@ -33,7 +33,6 @@ export const placeInitialState: IPlaceReducerState = {
     selectedPlace: undefined,
     tags: [],
   },
-  savedPlacesList: [],
 };
 
 //reducer function
@@ -70,32 +69,6 @@ export const placeReducer = (
         },
       };
 
-    case 'Set_Save_Place': {
-      return {
-        ...state,
-        appMode: 'initial',
-        form: placeInitialState.form,
-        savedPlacesList: [
-          ...state.savedPlacesList,
-          {
-            place: action.payload,
-            tags: [...state.form.tags],
-          },
-        ],
-      };
-    }
-
-    case 'Set_Delete_Place': {
-      const filteredPlaces = state.savedPlacesList.filter(({ place }) => {
-        return place?.name !== action.payload;
-      });
-
-      return {
-        ...state,
-        savedPlacesList: filteredPlaces,
-      };
-    }
-
     case 'Set_Delete_Tag': {
       return {
         ...state,
@@ -105,14 +78,6 @@ export const placeReducer = (
             return cat.name !== action.payload;
           }),
         },
-      };
-    }
-
-    case 'Reset_Form': {
-      return {
-        appMode: 'initial',
-        form: placeInitialState.form,
-        savedPlacesList: state.savedPlacesList,
       };
     }
 
