@@ -30,8 +30,4 @@ export type IPlaceReducerState = {
     selectedPlace: IPlaceData | undefined;
     tags: IPlaceTag[];
   };
-  savedPlacesList: {
-    place: IPlaceData;
-    tags: IPlaceTag[];
-  }[];
 };

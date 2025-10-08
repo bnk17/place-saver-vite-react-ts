@@ -5,10 +5,9 @@ import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import type { IPlaceReducerState } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { Button } from '../ui/Button';
-import { TagItem } from '../TagsManager/TagsManager';
 
 type IPlacesListViewProps = {
-  places: IPlaceReducerState['savedPlacesList'];
+  places: IPlaceReducerState;
   reducerDispatchAction: React.ActionDispatch<
     [action: IPlaceReducerAction]
   > | null;
@@ -17,6 +16,7 @@ export const IPlacesListView = ({
   reducerDispatchAction,
 }: IPlacesListViewProps) => {
   const { data } = useGetPlaces();
+
   if (data?.data === undefined || data.data.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
@@ -46,12 +46,15 @@ export const IPlacesListView = ({
       </div>
     );
   }
-
   return (
     <div className="mt-5 flex h-[750px] flex-col gap-2 overflow-y-scroll pb-5">
       {data.data.map((place) => {
         return (
-          <div key={place.name} className="border-b-1 border-gray-200">
+          <div
+            key={place.name}
+            className="border-b-1 border-gray-200"
+            onClick={() => console.log(place)}
+          >
             <PlaceItem
               name={place.name}
               adress={place.adress}
@@ -59,11 +62,6 @@ export const IPlacesListView = ({
               googleMapsUrl={place.googleMapsUrl}
               website={place.website}
             />
-            <div className="mb-2 flex flex-wrap gap-1">
-              {place.tags.map((tag) => {
-                return <TagItem key={tag.name} tag={tag} />;
-              })}
-            </div>
           </div>
         );
       })}

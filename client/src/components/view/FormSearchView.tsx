@@ -6,10 +6,7 @@ import {
   useState,
   type Ref,
 } from 'react';
-import {
-  PlaceContext,
-  PlaceDispatchContext,
-} from 'src/context/Places/PlacesContext';
+import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
 import { useGoogleMaps } from '../../hooks/useGoogleMaps';
 import type {
   GooglePlaceDetails,
@@ -41,7 +38,6 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const placeDispatchAction = useContext(PlaceDispatchContext);
-  const placeState = useContext(PlaceContext);
 
   // Get API key from environment variable
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -106,14 +102,6 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           additionalInfo
         );
 
-        const isNameExist = placeState?.savedPlacesList.some(({ place }) => {
-          return place.name === placeData.name;
-        });
-
-        if (isNameExist) {
-          throw new Error('Ce lieu à déjà été ajouté.');
-        }
-
         if (placeDispatchAction !== null) {
           placeDispatchAction({
             type: 'Set_Select_Place',
@@ -149,7 +137,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
         );
       }
     },
-    [getPlaceDetails, placeState?.savedPlacesList, placeDispatchAction]
+    [getPlaceDetails, placeDispatchAction]
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,7 +200,6 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
             onBlur={handleInputBlur}
             onFocus={handleInputFocus}
           />
-
           {/* Loading indicator */}
           {(isMapsLoading || isSearching) && (
             <div className="top-1/2 right-3 -translate-y-1/2 transform">
@@ -220,7 +207,6 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
             </div>
           )}
         </div>
-
         {/* Search Results Dropdown */}
         {showResults && searchResults.length > 0 && (
           <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-lg border border-gray-300 bg-white">
@@ -251,18 +237,6 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
             ))}
           </div>
         )}
-
-        {/* No results message */}
-        {/* {showResults &&
-          searchResults.length === 0 &&
-          query.trim() &&
-          !isSearching && (
-            <div className="absolute top-full right-0 left-0 z-50 mt-1 rounded-lg border border-gray-300 bg-white p-4 shadow-lg">
-              <p className="text-sm text-gray-500">
-                No places found for "{query}"
-              </p>
-            </div>
-          )} */}
       </div>
     </div>
   );
