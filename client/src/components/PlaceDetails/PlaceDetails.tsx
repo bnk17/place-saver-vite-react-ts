@@ -1,5 +1,6 @@
 import { MapsSearchIcon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import clsx from 'clsx';
 import type { IPlaceData } from 'src/shared/types';
 
 export const PlaceItem = ({
@@ -20,18 +21,22 @@ export const PlaceItem = ({
             alt="picture of the place"
           />
         )}
-        <div>
+        <div className="cursor-pointer">
           <p className="text-lg font-medium">{name}</p>
           <p className="w-[25ch] text-[13px] text-zinc-600">{adress}</p>
         </div>
       </div>
-      {googleMapsUrl !== null && (
-        <button className="p-1">
-          <a href={googleMapsUrl}>
-            <HugeiconsIcon icon={MapsSearchIcon} />
-          </a>
-        </button>
-      )}
+      <button
+        className={clsx(
+          'mr-2 p-1',
+          googleMapsUrl !== null ? 'text-zinc-900' : 'text-gray-300'
+        )}
+        disabled={googleMapsUrl !== null}
+      >
+        <a href={googleMapsUrl}>
+          <HugeiconsIcon icon={MapsSearchIcon} />
+        </a>
+      </button>
     </div>
   );
 };
