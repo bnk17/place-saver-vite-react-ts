@@ -26,6 +26,11 @@ export const places = pgTable('places', {
   googleMapsUrl: text('google_maps_url'),
 });
 
+export const placesId = pgTable('places', {
+  id: serial('id').primaryKey(),
+  placeId: varchar('place_id', { length: 255 }).notNull(),
+});
+
 // Tags table
 export const customTags = pgTable('custom_tags', {
   id: serial('id').primaryKey(),
@@ -38,7 +43,7 @@ export const placeTags = pgTable(
   {
     placeId: integer('place_id')
       .notNull()
-      .references(() => places.id, { onDelete: 'cascade' }),
+      .references(() => placesId.id, { onDelete: 'cascade' }),
     tagId: integer('tag_id')
       .notNull()
       .references(() => customTags.id, { onDelete: 'cascade' }),

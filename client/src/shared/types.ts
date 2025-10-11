@@ -31,3 +31,15 @@ export type IPlaceReducerState = {
     tags: IPlaceTag[];
   };
 };
+
+export type ISavePlaceIdDTO = {
+  placeId: string;
+  tags?: { name: string }[];
+};
+export type ISavePlaceIdResponseDTO = {
+  success: boolean;
+  data: {
+    id: number;
+    placeId: string;
+  };
+};

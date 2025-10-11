@@ -110,6 +110,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
               name: placeData.name,
               googleMapsUrl: placeData.googleMapsUrl,
               imgSrc: placeData.imgSrc,
+              placeId: placeData.placeId,
             },
           });
         }

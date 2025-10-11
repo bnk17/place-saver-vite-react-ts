@@ -1,21 +1,21 @@
 import { post, useGet } from 'src/lib/api';
-import { type IPlaceData, type IPlaceTag } from 'src/shared/types';
+import { type IPlaceTag, type ISavePlaceIdResponseDTO } from 'src/shared/types';
 
 /**
  * POST /api/place
  * Creates a place item in db.
  */
 
-type PlaceDTO = IPlaceData & { tags: IPlaceTag[] };
+type PlaceDTO = { placeId: string; tags: IPlaceTag[] };
 type ApiResponseDTO<T> = {
   success: boolean;
   data?: T;
   error?: string;
   cause?: string;
 };
-export const savePlace = (placeInfo: PlaceDTO) => {
+export const savePlaceId = (placeInfo: PlaceDTO) => {
   const body = placeInfo;
-  const response = post('api/places', body);
+  const response = post<ISavePlaceIdResponseDTO>('api/places', body);
 
   return response;
 };
