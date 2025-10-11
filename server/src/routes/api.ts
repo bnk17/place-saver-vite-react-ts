@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { db } from '../db/db';
-import { customTags, places, placeTags } from '../db/schema';
+import { customTags, places, placesId, placeTags } from '../db/schema';
 import { eq, inArray } from 'drizzle-orm';
 import { HTTPException } from 'hono/http-exception';
 
@@ -131,45 +131,36 @@ api.get('/places/:id', async (c) => {
     );
   }
 });
-// Create a new place
-// Create a new place
+// Store a new placeID and tags
 api.post('/places', async (c) => {
   try {
-    const body: typeof places.$inferInsert & { tags?: { name: string }[] } = await c.req.json();
+    const body: { placeId: string; tags?: { name: string }[] } = await c.req.json();
 
     // Validate required fields
-    if (!body.name || !body.adress) {
+    if (!body.placeId) {
       return c.json(
         {
           success: false,
-          error: 'Name and address are required',
+          error: 'Place id is required',
         },
         400
       );
     }
     // Get existing place with the same name
-    const existingPlace = await db.select().from(places).where(eq(places.name, body.name));
-    if (existingPlace.length > 0) {
+    const existingPlaceId = await db
+      .select()
+      .from(placesId)
+      .where(eq(placesId.placeId, body.placeId));
+    if (existingPlaceId.length > 0) {
       c.status(409);
       throw new HTTPException(409, { message: 'Ce spot a déjà été rajouté', cause: 'duplicate' });
     }
 
     // Insert the place into the database
     const [newPlace] = await db
-      .insert(places)
+      .insert(placesId)
       .values({
-        name: body.name,
-        adress: body.adress,
-        additionnalInfo: body.additionnalInfo || null,
-        imgSrc: body.imgSrc || null,
-        placeId: body.placeId || null,
-        lat: body.lat || null,
-        lng: body.lng || null,
-        rating: body.rating || null,
-        website: body.website || null,
-        phoneNumber: body.phoneNumber || null,
-        googlePhotos: body.googlePhotos || null,
-        googleMapsUrl: body.googleMapsUrl || null,
+        placeId: body.placeId,
       })
       .returning();
 

@@ -1,10 +1,12 @@
 import { LocationFavourite02Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import { DialogTrigger, Pressable } from 'react-aria-components';
 import { useGetPlaces } from 'src/api/places';
 import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import type { IPlaceReducerState } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { Button } from '../ui/Button';
+import { ModalBase } from '../ui/ModalBase';
 
 type IPlacesListViewProps = {
   places: IPlaceReducerState;
@@ -47,22 +49,30 @@ export const IPlacesListView = ({
     );
   }
   return (
-    <div className="mt-5 flex h-[750px] flex-col gap-2 overflow-y-scroll pb-5">
+    <div className="mt-5 flex h-[750px] w-full flex-col gap-2 overflow-y-scroll pb-5">
       {data.data.map((place) => {
         return (
-          <div
-            key={place.name}
-            className="border-b-1 border-gray-200"
-            onClick={() => console.log(place)}
-          >
-            <PlaceItem
-              name={place.name}
-              adress={place.adress}
-              imgSrc={place.imgSrc}
-              googleMapsUrl={place.googleMapsUrl}
-              website={place.website}
-            />
-          </div>
+          <DialogTrigger key={place.name}>
+            <Pressable>
+              <div className="w-full border-b-1 border-gray-200">
+                <ModalBase isDismissable>
+                  <div className="size-full bg-amber-100">
+                    <div className="w-full p-2">{place.adress}</div>
+                    <Button variant="primary" size="sm" className="bg-red-500">
+                      Supprimer
+                    </Button>
+                  </div>
+                </ModalBase>
+                <PlaceItem
+                  name={place.name}
+                  adress={place.adress}
+                  imgSrc={place.imgSrc}
+                  googleMapsUrl={place.googleMapsUrl}
+                  website={place.website}
+                />
+              </div>
+            </Pressable>
+          </DialogTrigger>
         );
       })}
     </div>

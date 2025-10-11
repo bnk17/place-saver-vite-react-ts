@@ -7,7 +7,7 @@ import type {
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
 import { TagManager } from '../TagsManager/TagsManager';
 import { Button } from '../ui/Button';
-import { savePlace } from 'src/api/places';
+import { savePlaceId } from 'src/api/places';
 
 type IFormAddingDetailsViewProps = {
   appMode: IPlaceReducerState['appMode'];
@@ -25,32 +25,31 @@ export const FormAddingDetailsView = ({
   reducerDispatchAction,
 }: IFormAddingDetailsViewProps) => {
   if (placeSelected === undefined) return;
-  const { adress, name, googleMapsUrl, imgSrc, website, rating, phoneNumber } =
-    placeSelected;
+  const { placeId } = placeSelected;
 
   function onSavePlaceClick() {
-    savePlace({
-      adress,
-      name,
-      googleMapsUrl,
-      imgSrc,
-      website,
-      rating,
-      phoneNumber,
-      tags: formTag,
-    })
-      .then(() => {
-        if (reducerDispatchAction !== null) {
-          reducerDispatchAction({
-            type: 'Set_Update_App_Mode',
-            payload: 'initial',
-          });
-          reducerDispatchAction({ type: 'Reset_Form' });
-        }
+    if (typeof placeId === 'string') {
+      savePlaceId({
+        tags: formTag,
+        placeId,
       })
-      .catch((e) => {
-        if (e instanceof Error) console.log(e.cause);
-      });
+        .then((res) => {
+          if (res.success) {
+            if (reducerDispatchAction !== null) {
+              reducerDispatchAction({
+                type: 'Set_Update_App_Mode',
+                payload: 'initial',
+              });
+              reducerDispatchAction({ type: 'Reset_Form' });
+            }
+          } else {
+            throw new Error('Une erreur est survenue, merci de réessayer.');
+          }
+        })
+        .catch((e) => {
+          if (e instanceof Error) console.log(e.cause);
+        });
+    }
   }
   return (
     <div className="mt-5">

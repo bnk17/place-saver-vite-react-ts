@@ -17,7 +17,7 @@ type IPlaceFlowProps = {
   searchInputRef: Ref<HTMLInputElement | null>;
   placeSelected: IPlaceData | undefined;
   formTags: IPlaceTag[];
-  placesSavedList: IPlaceReducerState['savedPlacesList'];
+  placesSavedList: IPlaceReducerState;
 };
 
 export const PlaceFlow = ({
@@ -33,7 +33,7 @@ export const PlaceFlow = ({
     case 'initial':
       return (
         <IPlacesListView
-          places={placeState.savedPlacesList}
+          places={placeState}
           reducerDispatchAction={placeReducerAction}
         />
       );
