@@ -27,6 +27,7 @@
     "react": "^19.1.0",
     "react-aria-components": "^1.13.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.9.4",
     "swr": "^2.3.6",
     "valibot": "^1.1.0"
   },
