@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useGetPlacesData } from 'src/api/places';
+import { useGetPlacesData } from 'src/features/Places/services/places.api';
+import { useGoogleMaps } from './useGoogleMaps';
 import type { GooglePlaceDetails } from 'src/services/googleMapsService';
 import type { IPlaceTag } from 'src/shared/types';
-import { useGoogleMaps } from './useGoogleMaps';
 
 type PlaceWithDetailsAndTags = {
   details: GooglePlaceDetails;

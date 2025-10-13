@@ -22,7 +22,10 @@ export type IPlaceData = {
   googleMapsUrl?: string;
 };
 
-export type IAppMode = 'initial' | 'form_search' | 'form_adding_details';
+export type IAppMode =
+  | 'places_list'
+  | 'place_form_search'
+  | 'place_form_adding_details';
 
 export type IPlaceReducerState = {
   appMode: IAppMode;

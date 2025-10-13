@@ -1,22 +1,18 @@
 import { LocationFavourite02FreeIcons } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { DialogTrigger, Pressable } from 'react-aria-components';
-import { useGetPlacesList } from 'src/hooks/useGetPlacesList';
 import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
-import type { IPlaceReducerState } from 'src/shared/types';
-import { PlaceItem } from '../PlaceDetails/PlaceDetails';
-import { Button } from '../ui/Button';
-import { ModalBase } from '../ui/ModalBase';
+import { Button } from 'components/ui/Button';
+import { ModalBase } from 'components/ui/ModalBase';
+import { PlaceItem } from '../PlaceItem/PlaceItem';
+import { useGetPlacesList } from '../../hooks/useGetPlacesList';
 
-type IPlacesListViewProps = {
-  places: IPlaceReducerState;
+type IPlacesListProps = {
   reducerDispatchAction: React.ActionDispatch<
     [action: IPlaceReducerAction]
   > | null;
 };
-export const IPlacesListView = ({
-  reducerDispatchAction,
-}: IPlacesListViewProps) => {
+export const PlacesList = ({ reducerDispatchAction }: IPlacesListProps) => {
   // Get API key from environment variable
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const { placesWithDetails } = useGetPlacesList(apiKey);
@@ -41,7 +37,7 @@ export const IPlacesListView = ({
             if (reducerDispatchAction !== null)
               reducerDispatchAction({
                 type: 'Set_Update_App_Mode',
-                payload: 'form_search',
+                payload: 'place_form_search',
               });
           }}
         >

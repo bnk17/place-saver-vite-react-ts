@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getGoogleMapsService } from '../services/googleMapsService';
+import { getGoogleMapsService } from 'src/services/googleMapsService';
 import type {
   GooglePlaceDetails,
   GooglePlaceSearchResult,
-} from '../services/googleMapsService';
+} from 'src/services/googleMapsService';
 
 interface UseGoogleMapsConfig {
   apiKey: string;

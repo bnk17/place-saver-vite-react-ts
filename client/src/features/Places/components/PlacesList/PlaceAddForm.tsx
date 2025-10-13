@@ -4,10 +4,10 @@ import type {
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
-import { PlaceItem } from '../PlaceDetails/PlaceDetails';
-import { TagManager } from '../TagsManager/TagsManager';
-import { Button } from '../ui/Button';
-import { savePlaceId } from 'src/api/places';
+import { Button } from 'components/ui/Button';
+import { savePlaceId } from 'src/features/Places/services/places.api';
+import { PlaceItem } from '../PlaceItem/PlaceItem';
+import { TagManager } from 'src/components/TagsManager/TagsManager';
 
 type IFormAddingDetailsViewProps = {
   appMode: IPlaceReducerState['appMode'];
@@ -18,7 +18,7 @@ type IFormAddingDetailsViewProps = {
   > | null;
 };
 
-export const FormAddingDetailsView = ({
+export const PlaceAddForm = ({
   appMode,
   placeSelected,
   formTag,
@@ -38,7 +38,7 @@ export const FormAddingDetailsView = ({
             if (reducerDispatchAction !== null) {
               reducerDispatchAction({
                 type: 'Set_Update_App_Mode',
-                payload: 'initial',
+                payload: 'places_list',
               });
               reducerDispatchAction({ type: 'Reset_Form' });
             }

@@ -9,19 +9,19 @@ const api = new Hono();
 // Get all places with their tags
 api.get('/places', async (c) => {
   try {
-    const allPlaces = await db.select().from(places);
+    const allPlacesId = await db.select().from(placesId);
 
     // Get all place IDs
-    const placeIds = allPlaces.map((place) => place.id);
+    const placeIds = allPlacesId.map((place) => place.id);
 
     // Get all place-tag relationships
-    const placeTagRelations = await db
+    const placeIdTagRelations = await db
       .select()
       .from(placeTags)
       .where(inArray(placeTags.placeId, placeIds));
 
     // Get all tag IDs
-    const tagIds = placeTagRelations.map((relation) => relation.tagId);
+    const tagIds = placeIdTagRelations.map((relation) => relation.tagId);
 
     // Get all tags
     const allTags =
@@ -34,7 +34,7 @@ api.get('/places', async (c) => {
 
     // Create a map of placeId -> tags
     const placeTagsMap = new Map<number, (typeof customTags.$inferSelect)[]>();
-    for (const relation of placeTagRelations) {
+    for (const relation of placeIdTagRelations) {
       const tag = tagMap.get(relation.tagId);
       if (tag) {
         if (!placeTagsMap.has(relation.placeId)) {
@@ -45,7 +45,7 @@ api.get('/places', async (c) => {
     }
 
     // Combine places with their tags
-    const placesWithTags = allPlaces.map((place) => ({
+    const placesIdWithTags = allPlacesId.map((place) => ({
       ...place,
       tags: placeTagsMap.get(place.id) || [],
     }));
@@ -53,7 +53,7 @@ api.get('/places', async (c) => {
     return c.json(
       {
         success: true,
-        data: placesWithTags,
+        data: placesIdWithTags,
       },
       200
     );

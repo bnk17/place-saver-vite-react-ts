@@ -2,7 +2,6 @@ import { placeInitialState, placeReducer } from 'src/reducers/placeReducer';
 import { useEffect, useReducer, useRef } from 'react';
 import './App.css';
 import { AppHeader } from './components/Header/Header';
-import { PlaceFlow } from './components/view/PlaceFlow';
 import {
   PlaceContext,
   PlaceDispatchContext,
@@ -13,6 +12,7 @@ import {
   SearchList01Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import { PlaceFlow } from './features/Places/components/PlacesList/PlaceFlow';
 
 export function App() {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -21,14 +21,17 @@ export function App() {
     placeInitialState
   );
   function handleAppChangeModeClick() {
-    if (placeState.appMode === 'initial') {
+    if (placeState.appMode === 'places_list') {
       placeDispatchAction({
         type: 'Set_Update_App_Mode',
-        payload: 'form_search',
+        payload: 'place_form_search',
       });
       return;
     }
-    placeDispatchAction({ type: 'Set_Update_App_Mode', payload: 'initial' });
+    placeDispatchAction({
+      type: 'Set_Update_App_Mode',
+      payload: 'places_list',
+    });
   }
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export function App() {
       <AppHeader
         formMode={placeState.appMode}
         buttonIcon={
-          placeState.appMode === 'initial' ? (
+          placeState.appMode === 'places_list' ? (
             <HugeiconsIcon
               icon={SearchList01Icon}
               strokeWidth={2}
@@ -64,7 +67,6 @@ export function App() {
               searchInputRef={searchInputRef}
               placeSelected={placeState.form.selectedPlace}
               formTags={placeState.form.tags}
-              placesSavedList={placeState.savedPlacesList}
             />
           </section>
         </PlaceDispatchContext>

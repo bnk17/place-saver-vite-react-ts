@@ -7,16 +7,16 @@ import {
   type Ref,
 } from 'react';
 import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
-import { useGoogleMaps } from '../../hooks/useGoogleMaps';
 import type {
   GooglePlaceDetails,
   GooglePlaceSearchResult,
-} from '../../services/googleMapsService';
+} from 'src/services/googleMapsService';
 import {
   convertGooglePlaceToIPlaceData,
   generateAdditionalInfoFromGooglePlace,
-} from '../../utils/googleMapsHelpers';
-import { Input } from '../ui/Input';
+} from 'utils/googleMapsHelpers';
+import { Input } from 'components/ui/Input';
+import { useGoogleMaps } from '../../hooks/useGoogleMaps';
 
 interface SearchResult extends GooglePlaceSearchResult {
   isLoading?: boolean;
