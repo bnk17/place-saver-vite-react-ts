@@ -8,16 +8,15 @@ import type {
   IPlaceData,
   IPlaceReducerState,
 } from 'src/shared/types';
-import { FormAddingDetailsView } from './FormAddingDetailsView';
-import { PlaceSearch } from './FormSearchView';
-import { IPlacesListView } from './PlacesListView';
+import { PlaceAddForm } from './PlaceAddForm';
+import { PlaceSearch } from './PlaceSearchForm';
+import { PlacesList } from './PlacesList';
 
 type IPlaceFlowProps = {
   appMode: IPlaceReducerState['appMode'];
   searchInputRef: Ref<HTMLInputElement | null>;
   placeSelected: IPlaceData | undefined;
   formTags: IPlaceTag[];
-  placesSavedList: IPlaceReducerState;
 };
 
 export const PlaceFlow = ({
@@ -30,21 +29,16 @@ export const PlaceFlow = ({
   const placeReducerAction = useContext(PlaceDispatchContext);
 
   switch (placeState?.appMode) {
-    case 'initial':
-      return (
-        <IPlacesListView
-          places={placeState}
-          reducerDispatchAction={placeReducerAction}
-        />
-      );
+    case 'places_list':
+      return <PlacesList reducerDispatchAction={placeReducerAction} />;
 
-    case 'form_search': {
+    case 'place_form_search': {
       return <PlaceSearch inputRef={searchInputRef} />;
     }
 
-    case 'form_adding_details':
+    case 'place_form_adding_details':
       return (
-        <FormAddingDetailsView
+        <PlaceAddForm
           appMode={appMode}
           placeSelected={placeSelected}
           formTag={formTags}

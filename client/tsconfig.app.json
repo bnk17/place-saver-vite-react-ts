@@ -25,7 +25,7 @@
     "paths": {
       "src/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "features/*": ["./src/features/*"],
+      "features/*": ["src/features/*"],
       "reducers/*": ["./src/reducers/*"],
       "context/*": ["./src/context/*"],
       "shared/*": ["./src/shared/*"],

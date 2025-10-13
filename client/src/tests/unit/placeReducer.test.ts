@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 
 describe('Test all actions of placeReducer ', () => {
   const testInitialState: IPlaceReducerState = {
-    appMode: 'initial',
+    appMode: 'places_list',
     form: {
       selectedPlace: undefined,
       tags: [],
@@ -53,7 +53,7 @@ describe('Test all actions of placeReducer ', () => {
     test('should update the appMode to form_adding_details', () => {
       const result = placeReducer(testInitialState, {
         type: 'Set_Update_App_Mode',
-        payload: 'form_adding_details',
+        payload: 'place_form_adding_details',
       });
       expect(result.appMode).toBe('form_adding_details');
     });
@@ -61,7 +61,7 @@ describe('Test all actions of placeReducer ', () => {
     test("the test shouldn't pass if the value expected is not form_adding_details", () => {
       const result = placeReducer(testInitialState, {
         type: 'Set_Update_App_Mode',
-        payload: 'form_adding_details',
+        payload: 'place_form_adding_details',
       });
       expect(result.appMode).not.toBe('wrong value');
     });
@@ -170,7 +170,7 @@ describe('Test all actions of placeReducer ', () => {
     // ----------------------
     test('should reset form but keep savedPlacesList intact', () => {
       const stateWithData: IPlaceReducerState = {
-        appMode: 'form_adding_details',
+        appMode: 'place_form_adding_details',
         form: {
           selectedPlace: newSelectedPlace,
           tags: [{ name: 'romantic' }],
