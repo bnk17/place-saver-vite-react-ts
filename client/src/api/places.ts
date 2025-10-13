@@ -22,9 +22,9 @@ export const savePlaceId = (placeInfo: PlaceDTO) => {
 
 /**
  * GET /api/places
- * Fetch all places
+ * Fetch all places ids
  */
-export const useGetPlaces = () => {
+export const useGetPlacesData = () => {
   const response = useGet<ApiResponseDTO<PlaceDTO[]>>('api/places');
 
   return response;

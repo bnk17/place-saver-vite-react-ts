@@ -1,7 +1,7 @@
-import { LocationFavourite02Icon } from '@hugeicons/core-free-icons';
+import { LocationFavourite02FreeIcons } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { DialogTrigger, Pressable } from 'react-aria-components';
-import { useGetPlaces } from 'src/api/places';
+import { useGetPlacesList } from 'src/hooks/useGetPlacesList';
 import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import type { IPlaceReducerState } from 'src/shared/types';
 import { PlaceItem } from '../PlaceDetails/PlaceDetails';
@@ -17,15 +17,17 @@ type IPlacesListViewProps = {
 export const IPlacesListView = ({
   reducerDispatchAction,
 }: IPlacesListViewProps) => {
-  const { data } = useGetPlaces();
+  // Get API key from environment variable
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const { placesWithDetails } = useGetPlacesList(apiKey);
 
-  if (data?.data === undefined || data.data.length === 0) {
+  if (placesWithDetails.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2">
         <div className="flex flex-col items-center gap-2 text-center">
           <span>
             <HugeiconsIcon
-              icon={LocationFavourite02Icon}
+              icon={LocationFavourite02FreeIcons}
               strokeWidth={2}
               size={50}
               className="text-gray-400"
@@ -50,25 +52,24 @@ export const IPlacesListView = ({
   }
   return (
     <div className="mt-5 flex h-[750px] w-full flex-col gap-2 overflow-y-scroll pb-5">
-      {data.data.map((place) => {
+      {placesWithDetails?.map((place) => {
         return (
-          <DialogTrigger key={place.name}>
+          <DialogTrigger key={place.details.name}>
             <Pressable>
               <div className="w-full border-b-1 border-gray-200">
                 <ModalBase isDismissable>
                   <div className="size-full bg-amber-100">
-                    <div className="w-full p-2">{place.adress}</div>
+                    <div className="w-full p-2">{place.details.address}</div>
                     <Button variant="primary" size="sm" className="bg-red-500">
                       Supprimer
                     </Button>
                   </div>
                 </ModalBase>
                 <PlaceItem
-                  name={place.name}
-                  adress={place.adress}
-                  imgSrc={place.imgSrc}
-                  googleMapsUrl={place.googleMapsUrl}
-                  website={place.website}
+                  name={place.details.name}
+                  adress={place.details.address}
+                  imgSrc={place.details.photos?.[0].url}
+                  website={place.details.website}
                 />
               </div>
             </Pressable>
