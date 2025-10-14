@@ -28,7 +28,6 @@ export type IPlaceReducerAction =
   | ResetForm;
 
 export const placeInitialState: IPlaceReducerState = {
-  appMode: 'places_list',
   form: {
     selectedPlace: undefined,
     tags: [],
@@ -43,16 +42,9 @@ export const placeReducer = (
   if (action === null) return state;
 
   switch (action.type) {
-    case 'Set_Update_App_Mode': {
-      return {
-        ...state,
-        appMode: action.payload,
-      };
-    }
     case 'Set_Select_Place': {
       return {
         ...state,
-        appMode: 'place_form_adding_details',
         form: {
           ...state.form,
           selectedPlace: action.payload,

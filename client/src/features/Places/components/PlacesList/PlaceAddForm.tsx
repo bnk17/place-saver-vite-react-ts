@@ -1,16 +1,11 @@
 import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
-import type {
-  IPlaceTag,
-  IPlaceData,
-  IPlaceReducerState,
-} from 'src/shared/types';
+import type { IPlaceTag, IPlaceData } from 'src/shared/types';
 import { Button } from 'components/ui/Button';
 import { savePlaceId } from 'src/features/Places/services/places.api';
 import { PlaceItem } from '../PlaceItem/PlaceItem';
 import { TagManager } from 'src/components/TagsManager/TagsManager';
 
 type IFormAddingDetailsViewProps = {
-  appMode: IPlaceReducerState['appMode'];
   placeSelected: IPlaceData | undefined;
   formTag: IPlaceTag[];
   reducerDispatchAction: React.ActionDispatch<
@@ -19,7 +14,6 @@ type IFormAddingDetailsViewProps = {
 };
 
 export const PlaceAddForm = ({
-  appMode,
   placeSelected,
   formTag,
   reducerDispatchAction,
@@ -58,11 +52,7 @@ export const PlaceAddForm = ({
         name={placeSelected.name}
         imgSrc={placeSelected.imgSrc}
       />
-      <TagManager
-        tags={formTag}
-        onTagChange={reducerDispatchAction}
-        mode={appMode}
-      />
+      <TagManager tags={formTag} onTagChange={reducerDispatchAction} />
       <Button
         onClick={() => onSavePlaceClick()}
         className="absolute bottom-0 left-0 w-full bg-zinc-900"

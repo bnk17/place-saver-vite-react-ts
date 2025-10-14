@@ -4,7 +4,6 @@ import { describe, expect, test } from 'vitest';
 
 describe('Test all actions of placeReducer ', () => {
   const testInitialState: IPlaceReducerState = {
-    appMode: 'places_list',
     form: {
       selectedPlace: undefined,
       tags: [],
@@ -46,25 +45,6 @@ describe('Test all actions of placeReducer ', () => {
   });
 
   // ----------------------
-  // Set_Update_App_Mode
-  // ----------------------
-  test('should update the appMode to form_adding_details', () => {
-    const result = placeReducer(testInitialState, {
-      type: 'Set_Update_App_Mode',
-      payload: 'place_form_adding_details',
-    });
-    expect(result.appMode).toBe('place_form_adding_details');
-  });
-
-  test("the test shouldn't pass if the value expected is not form_adding_details", () => {
-    const result = placeReducer(testInitialState, {
-      type: 'Set_Update_App_Mode',
-      payload: 'place_form_adding_details',
-    });
-    expect(result.appMode).not.toBe('wrong value');
-  });
-
-  // ----------------------
   // Set_Select_Place
   // ----------------------
   test('should update the selectedPlace and the appMode should be set to form_adding_details', () => {
@@ -74,17 +54,6 @@ describe('Test all actions of placeReducer ', () => {
     });
 
     expect(result.form.selectedPlace).toEqual(newSelectedPlace);
-    expect(result.appMode).toBe('place_form_adding_details');
-  });
-
-  test("test shouldn't pass because result.appMode should be equal to form_adding_details", () => {
-    const result = placeReducer(testInitialState, {
-      type: 'Set_Select_Place',
-      payload: newSelectedPlace,
-    });
-
-    expect(result.form.selectedPlace).toEqual(newSelectedPlace);
-    expect(result.appMode).not.toBe('initial');
   });
 
   test('should not mutate the initialState when selecting a place', () => {
@@ -122,7 +91,6 @@ describe('Test all actions of placeReducer ', () => {
   // ----------------------
   test('should reset form and return the place initial state', () => {
     const stateWithData: IPlaceReducerState = {
-      appMode: 'place_form_adding_details',
       form: {
         selectedPlace: newSelectedPlace,
         tags: [{ name: 'romantic' }],
@@ -131,7 +99,6 @@ describe('Test all actions of placeReducer ', () => {
 
     const result = placeReducer(stateWithData, { type: 'Reset_Form' });
 
-    expect(result.appMode).toBe('places_list');
     expect(result.form).toEqual(testInitialState.form);
   });
 
