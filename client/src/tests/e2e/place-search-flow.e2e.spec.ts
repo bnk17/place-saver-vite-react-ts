@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Visual Testing', () => {
+test.describe('it shou', () => {
   test('should see the app logo', async ({ page }) => {
     await page.goto('/');
 
