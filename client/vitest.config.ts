@@ -18,10 +18,14 @@ export default defineConfig({
     },
   },
   test: {
+    globals: true,
     environment: 'jsdom',
     setupFiles: './src/tests/setup.ts',
     // Include only integration tests (unit and component tests)
-    include: ['src/tests/unit/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    include: [
+      'src/tests/unit/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'src/tests/integration/**/*.{test,spec}.{js,ts,jsx,tsx}',
+    ],
     // Explicitly exclude e2e tests to avoid conflicts with Playwright
     exclude: ['src/tests/e2e/**/*', 'node_modules/**/*'],
     coverage: {
