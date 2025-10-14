@@ -200,6 +200,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
             onValueChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleInputFocus}
+            data-testid="place-search-input"
           />
           {/* Loading indicator */}
           {(isMapsLoading || isSearching) && (
