@@ -28,7 +28,6 @@ export type IAppMode =
   | 'place_form_adding_details';
 
 export type IPlaceReducerState = {
-  appMode: IAppMode;
   form: {
     selectedPlace: IPlaceData | undefined;
     tags: IPlaceTag[];

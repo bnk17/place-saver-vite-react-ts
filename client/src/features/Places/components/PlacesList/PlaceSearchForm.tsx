@@ -40,7 +40,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
   const placeDispatchAction = useContext(PlaceDispatchContext);
 
   // Get API key from environment variable
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 
   const {
     isLoading: isMapsLoading,
