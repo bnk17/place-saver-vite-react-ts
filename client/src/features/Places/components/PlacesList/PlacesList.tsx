@@ -1,21 +1,15 @@
 import { LocationFavourite02FreeIcons } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { DialogTrigger, Pressable } from 'react-aria-components';
-import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
 import { Button } from 'components/ui/Button';
 import { ModalBase } from 'components/ui/ModalBase';
-import { PlaceItem } from '../PlaceItem/PlaceItem';
+import { DialogTrigger, Pressable } from 'react-aria-components';
 import { useGetPlacesList } from '../../hooks/useGetPlacesList';
+import { PlaceItem } from '../PlaceItem/PlaceItem';
 
-type IPlacesListProps = {
-  reducerDispatchAction: React.ActionDispatch<
-    [action: IPlaceReducerAction]
-  > | null;
-};
-export const PlacesList = ({ reducerDispatchAction }: IPlacesListProps) => {
+export const PlacesList = () => {
   // Get API key from environment variable
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  const { placesWithDetails } = useGetPlacesList(apiKey);
+  const { placesWithDetails } = useGetPlacesList(apiKey ?? '');
 
   if (placesWithDetails.length === 0) {
     return (
@@ -31,23 +25,12 @@ export const PlacesList = ({ reducerDispatchAction }: IPlacesListProps) => {
           </span>
           Aucun spot n'a été enregistré...
         </div>
-        <Button
-          className="bg-zinc-900"
-          onClick={() => {
-            if (reducerDispatchAction !== null)
-              reducerDispatchAction({
-                type: 'Set_Update_App_Mode',
-                payload: 'place_form_search',
-              });
-          }}
-        >
-          Rechercher un spot
-        </Button>
+        <Button className="bg-zinc-900">Rechercher un spot</Button>
       </div>
     );
   }
   return (
-    <div className="mt-5 flex h-[750px] w-full flex-col gap-2 overflow-y-scroll pb-5">
+    <div className="mt-5 flex h-[750px] w-full flex-col gap-2 overflow-y-auto pb-5">
       {placesWithDetails?.map((place) => {
         return (
           <DialogTrigger key={place.details.name}>
