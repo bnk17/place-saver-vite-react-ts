@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import App from 'src/App';
 import { describe, expect, test } from 'vitest';
 
-describe('Test all actions of placeReducer', () => {
+describe('Tests display of the features places-list and place-search-form', () => {
   beforeEach(() => {
     render(<App />);
   });
