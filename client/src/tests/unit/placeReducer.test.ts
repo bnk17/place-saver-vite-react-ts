@@ -9,7 +9,6 @@ describe('Test all actions of placeReducer ', () => {
       selectedPlace: undefined,
       tags: [],
     },
-    savedPlacesList: [],
   };
 
   const newSelectedPlace: IPlaceData = {
@@ -46,152 +45,102 @@ describe('Test all actions of placeReducer ', () => {
     expect(result.form.selectedPlace).toEqual(newSelectedPlace);
   });
 
-  describe('Test all actions of placeReducer', () => {
-    // ----------------------
-    // Set_Update_App_Mode
-    // ----------------------
-    test('should update the appMode to form_adding_details', () => {
-      const result = placeReducer(testInitialState, {
-        type: 'Set_Update_App_Mode',
-        payload: 'place_form_adding_details',
-      });
-      expect(result.appMode).toBe('form_adding_details');
+  // ----------------------
+  // Set_Update_App_Mode
+  // ----------------------
+  test('should update the appMode to form_adding_details', () => {
+    const result = placeReducer(testInitialState, {
+      type: 'Set_Update_App_Mode',
+      payload: 'place_form_adding_details',
+    });
+    expect(result.appMode).toBe('place_form_adding_details');
+  });
+
+  test("the test shouldn't pass if the value expected is not form_adding_details", () => {
+    const result = placeReducer(testInitialState, {
+      type: 'Set_Update_App_Mode',
+      payload: 'place_form_adding_details',
+    });
+    expect(result.appMode).not.toBe('wrong value');
+  });
+
+  // ----------------------
+  // Set_Select_Place
+  // ----------------------
+  test('should update the selectedPlace and the appMode should be set to form_adding_details', () => {
+    const result = placeReducer(testInitialState, {
+      type: 'Set_Select_Place',
+      payload: newSelectedPlace,
     });
 
-    test("the test shouldn't pass if the value expected is not form_adding_details", () => {
-      const result = placeReducer(testInitialState, {
-        type: 'Set_Update_App_Mode',
-        payload: 'place_form_adding_details',
-      });
-      expect(result.appMode).not.toBe('wrong value');
+    expect(result.form.selectedPlace).toEqual(newSelectedPlace);
+    expect(result.appMode).toBe('place_form_adding_details');
+  });
+
+  test("test shouldn't pass because result.appMode should be equal to form_adding_details", () => {
+    const result = placeReducer(testInitialState, {
+      type: 'Set_Select_Place',
+      payload: newSelectedPlace,
     });
 
-    // ----------------------
-    // Set_Select_Place
-    // ----------------------
-    test('should update the selectedPlace and the appMode should be set to form_adding_details', () => {
-      const result = placeReducer(testInitialState, {
-        type: 'Set_Select_Place',
-        payload: newSelectedPlace,
-      });
+    expect(result.form.selectedPlace).toEqual(newSelectedPlace);
+    expect(result.appMode).not.toBe('initial');
+  });
 
-      expect(result.form.selectedPlace).toEqual(newSelectedPlace);
-      expect(result.appMode).toBe('form_adding_details');
+  test('should not mutate the initialState when selecting a place', () => {
+    const result = placeReducer(testInitialState, {
+      type: 'Set_Select_Place',
+      payload: newSelectedPlace,
     });
 
-    test("test shouldn't pass because result.appMode should be equal to form_adding_details", () => {
-      const result = placeReducer(testInitialState, {
-        type: 'Set_Select_Place',
-        payload: newSelectedPlace,
-      });
+    expect(testInitialState.form.selectedPlace).toBeUndefined();
+    expect(result.form.selectedPlace).toEqual(newSelectedPlace);
+  });
 
-      expect(result.form.selectedPlace).toEqual(newSelectedPlace);
-      expect(result.appMode).not.toBe('initial');
+  // ----------------------
+  // Set_Delete_Tag
+  // ----------------------
+  test('should delete a tag from the form', () => {
+    const stateWithTags = {
+      ...testInitialState,
+      form: {
+        ...testInitialState.form,
+        tags: [{ name: 'food' }, { name: 'drinks' }],
+      },
+    };
+
+    const result = placeReducer(stateWithTags, {
+      type: 'Set_Delete_Tag',
+      payload: 'food',
     });
 
-    test('should not mutate the initialState when selecting a place', () => {
-      const result = placeReducer(testInitialState, {
-        type: 'Set_Select_Place',
-        payload: newSelectedPlace,
-      });
+    expect(result.form.tags).toEqual([{ name: 'drinks' }]);
+  });
 
-      expect(testInitialState.form.selectedPlace).toBeUndefined();
-      expect(result.form.selectedPlace).toEqual(newSelectedPlace);
-    });
+  // ----------------------
+  // Reset_Form
+  // ----------------------
+  test('should reset form and return the place initial state', () => {
+    const stateWithData: IPlaceReducerState = {
+      appMode: 'place_form_adding_details',
+      form: {
+        selectedPlace: newSelectedPlace,
+        tags: [{ name: 'romantic' }],
+      },
+    };
 
-    // ----------------------
-    // Set_Save_Place
-    // ----------------------
-    test('should save a place with current tags into savedPlacesList', () => {
-      const stateWithTags = {
-        ...testInitialState,
-        form: {
-          ...testInitialState.form,
-          tags: [{ name: 'food' }, { name: 'drinks' }],
-        },
-      };
+    const result = placeReducer(stateWithData, { type: 'Reset_Form' });
 
-      const result = placeReducer(stateWithTags, {
-        type: 'Set_Save_Place',
-        payload: newSelectedPlace,
-      });
+    expect(result.appMode).toBe('places_list');
+    expect(result.form).toEqual(testInitialState.form);
+  });
 
-      expect(result.savedPlacesList).toHaveLength(1);
-      expect(result.savedPlacesList[0].place).toEqual(newSelectedPlace);
-      expect(result.savedPlacesList[0].tags).toEqual(stateWithTags.form.tags);
-    });
-
-    // ----------------------
-    // Set_Delete_Place
-    // ----------------------
-    test('should delete a place by name from savedPlacesList', () => {
-      const stateWithPlace = {
-        ...testInitialState,
-        savedPlacesList: [
-          { place: newSelectedPlace, tags: [] },
-          {
-            place: { name: 'Another', adress: 'Berlin', imgSrc: 'other.jpg' },
-            tags: [],
-          },
-        ],
-      };
-
-      const result = placeReducer(stateWithPlace, {
-        type: 'Set_Delete_Place',
-        payload: 'Rmdn.', // deletes by name
-      });
-
-      expect(result.savedPlacesList).toHaveLength(1);
-      expect(result.savedPlacesList[0].place?.name).toBe('Another');
-    });
-
-    // ----------------------
-    // Set_Delete_Tag
-    // ----------------------
-    test('should delete a tag from the form', () => {
-      const stateWithTags = {
-        ...testInitialState,
-        form: {
-          ...testInitialState.form,
-          tags: [{ name: 'food' }, { name: 'drinks' }],
-        },
-      };
-
-      const result = placeReducer(stateWithTags, {
-        type: 'Set_Delete_Tag',
-        payload: 'food',
-      });
-
-      expect(result.form.tags).toEqual([{ name: 'drinks' }]);
-    });
-
-    // ----------------------
-    // Reset_Form
-    // ----------------------
-    test('should reset form but keep savedPlacesList intact', () => {
-      const stateWithData: IPlaceReducerState = {
-        appMode: 'place_form_adding_details',
-        form: {
-          selectedPlace: newSelectedPlace,
-          tags: [{ name: 'romantic' }],
-        },
-        savedPlacesList: [{ place: newSelectedPlace, tags: [] }],
-      };
-
-      const result = placeReducer(stateWithData, { type: 'Reset_Form' });
-
-      expect(result.appMode).toBe('initial');
-      expect(result.form).toEqual(testInitialState.form); // reset form
-      expect(result.savedPlacesList).toEqual(stateWithData.savedPlacesList); // keep savedPlaces
-    });
-
-    // ----------------------
-    // Unknown action (defensive test)
-    // ----------------------
-    test('should return same state for unknown action types', () => {
-      // @ts-expect-error testing unknown action
-      const result = placeReducer(testInitialState, { type: 'UNKNOWN_ACTION' });
-      expect(result).toBe(testInitialState); // same reference
-    });
+  // ----------------------
+  // Unknown action (defensive test)
+  // ----------------------
+  test('should return same state for unknown action types', () => {
+    // @ts-expect-error testing unknown action
+    const result = placeReducer(testInitialState, { type: 'UNKNOWN_ACTION' });
+    expect(result).toBe(testInitialState); // same reference
   });
 });

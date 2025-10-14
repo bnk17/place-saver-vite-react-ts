@@ -81,6 +81,10 @@ export const placeReducer = (
       };
     }
 
+    case 'Reset_Form': {
+      return placeInitialState;
+    }
+
     default:
       return state;
   }
