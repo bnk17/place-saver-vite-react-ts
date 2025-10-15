@@ -17,7 +17,7 @@ export const PlaceItem = ({ name, adress, imgSrc, website }: IPlaceData) => {
           />
         )}
         <div className="cursor-pointer">
-          <p className="text-lg font-medium">{name}</p>
+          <p className="w-[20ch] text-lg font-medium">{name}</p>
           <p className="w-[25ch] text-[13px] text-zinc-600">{adress}</p>
         </div>
       </div>
