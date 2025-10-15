@@ -3,11 +3,9 @@ import { Link, useLocation } from 'react-router';
 
 export const AppHeader = () => {
   const location = useLocation();
-  const url = location.pathname as '/places';
-  const isPlacesLinkActive = url === '/places';
 
   return (
-    <header className="sticky top-0 flex items-center justify-between">
+    <header className="sticky top-0 z-50 flex items-center justify-between bg-white py-2">
       <Link to="/" className="hover:underline">
         <h1 className="w-full text-[22px] font-semibold text-zinc-900">
           Rmnd.
@@ -18,8 +16,8 @@ export const AppHeader = () => {
           to="/todos"
           className={clsx(
             'px-2 py-1',
-            !isPlacesLinkActive &&
-              'rounded-full border-1 border-gray-300 bg-gray-100 font-medium'
+            location.pathname === '/todos' &&
+              'rounded-full bg-violet-100 font-medium text-violet-700'
           )}
         >
           Todos
@@ -28,8 +26,8 @@ export const AppHeader = () => {
           to="/places"
           className={clsx(
             'px-2 py-1',
-            isPlacesLinkActive &&
-              'rounded-full border-1 border-gray-300 bg-gray-100 font-medium'
+            location.pathname === '/places' &&
+              'rounded-full bg-amber-100 font-medium text-amber-600'
           )}
         >
           Places

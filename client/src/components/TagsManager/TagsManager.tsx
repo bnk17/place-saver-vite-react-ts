@@ -1,13 +1,11 @@
 import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
 import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
 import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
-import type { IPlaceTag, IPlaceReducerState } from 'src/shared/types';
+import type { IPlaceTag } from 'src/shared/types';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 
-type Tag = IPlaceTag; // keeping type compatible, just renamed
-
-// Individual Tag display component
+type Tag = IPlaceTag;
 type TagItemProps = {
   tag: Tag;
   onRemove?: (tagName: string) => void;
@@ -22,18 +20,12 @@ export const TagItem = ({ tag, onRemove }: TagItemProps) => (
   </div>
 );
 
-// Main TagManager component
 type TagManagerProps = {
   tags: Tag[];
-  mode?: IPlaceReducerState['appMode'];
   onTagChange?: React.ActionDispatch<[action: IPlaceReducerAction]> | null;
 };
 
-export const TagManager = ({
-  tags,
-  onTagChange = null,
-  mode,
-}: TagManagerProps) => {
+export const TagManager = ({ tags, onTagChange = null }: TagManagerProps) => {
   const [tagInput, setTagInput] = useState('');
   const tagInputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useContext(PlaceDispatchContext);
@@ -59,15 +51,13 @@ export const TagManager = ({
   }, [tagInputRef, showTagInput]);
 
   const handleRemoveTag = (name: string) => {
-    if (mode === 'form_adding_details' && dispatch) {
+    if (dispatch) {
       dispatch({
         type: 'Set_Delete_Tag',
         payload: name,
       });
     }
   };
-
-  if (mode !== 'form_adding_details') return;
 
   return (
     <div className="mt-2 mb-2 flex h-full max-h-fit w-full flex-col gap-2 overflow-y-auto pb-2">

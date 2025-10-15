@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type Ref,
-} from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
 import type {
   GooglePlaceDetails,
@@ -17,20 +10,17 @@ import {
 } from 'utils/googleMapsHelpers';
 import { Input } from 'components/ui/Input';
 import { useGoogleMaps } from '../../hooks/useGoogleMaps';
+import { useNavigate } from 'react-router';
 
 interface SearchResult extends GooglePlaceSearchResult {
   isLoading?: boolean;
 }
 
-type PlaceSearchProps = {
-  inputRef: Ref<HTMLInputElement | null>;
-};
-
 /**
  * PlaceSearch Component
  * Provides Google Maps Places search functionality with autocomplete-like behavior
  */
-export function PlaceSearch({ inputRef }: PlaceSearchProps) {
+export function PlaceSearch() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -38,6 +28,9 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const placeDispatchAction = useContext(PlaceDispatchContext);
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   // Get API key from environment variable
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
@@ -97,6 +90,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
         );
         const additionalInfo =
           generateAdditionalInfoFromGooglePlace(placeDetails);
+
         const placeData = convertGooglePlaceToIPlaceData(
           placeDetails,
           additionalInfo
@@ -113,6 +107,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
               placeId: placeData.placeId,
             },
           });
+          void navigate('/places/search/add-details');
         }
 
         // Clear search after selection
@@ -138,7 +133,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
         );
       }
     },
-    [getPlaceDetails, placeDispatchAction]
+    [getPlaceDetails, navigate, placeDispatchAction]
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +153,9 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
 
   // Cleanup timeout on unmount
   useEffect(() => {
+    if (searchInputRef.current !== null) {
+      searchInputRef.current.focus();
+    }
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
@@ -177,7 +175,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="flex h-screen w-full flex-col items-center justify-center">
       {errorMessage && (
         <div
           className={`mb-5 w-full rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700`}
@@ -193,7 +191,7 @@ export function PlaceSearch({ inputRef }: PlaceSearchProps) {
           }
         >
           <Input
-            inputRef={inputRef}
+            inputRef={searchInputRef}
             name="name"
             placeholder="Tape un endroit sympa…"
             value={query}
