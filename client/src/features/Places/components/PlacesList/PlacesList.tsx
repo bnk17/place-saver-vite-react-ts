@@ -6,6 +6,7 @@ import { DialogTrigger, Pressable } from 'react-aria-components';
 import { Link, Outlet } from 'react-router';
 import { useGetPlacesList } from '../../hooks/useGetPlacesList';
 import { PlaceItem } from '../PlaceItem/PlaceItem';
+import clsx from 'clsx';
 
 export const PlacesList = () => {
   // Get API key from environment variable
@@ -31,12 +32,18 @@ export const PlacesList = () => {
     );
   }
   return (
-    <div className="mt-5 flex h-fit w-full flex-col gap-2 overflow-y-auto pb-5">
-      {placesWithDetails?.map((place) => {
+    <div className="mt-5 flex h-fit w-full flex-col gap-2 overflow-y-auto pb-15">
+      {placesWithDetails?.map((place, i) => {
         return (
           <DialogTrigger key={place.details.name}>
             <Pressable>
-              <div className="w-full border-b-1 border-gray-200">
+              <div
+                className={clsx(
+                  'w-full',
+                  i !== placesWithDetails.length - 1 &&
+                    'border-b-1 border-gray-200'
+                )}
+              >
                 <ModalBase isDismissable>
                   <div className="size-full bg-amber-100">
                     <div className="w-full p-2">{place.details.address}</div>

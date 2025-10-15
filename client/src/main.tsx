@@ -8,6 +8,7 @@ import { PlacesList } from './features/Places/components/PlacesList/PlacesList.t
 import './index.css';
 import { PlaceProvider } from './context/Places/PlaceContextProvider.tsx';
 import { PlaceSearchAddDetails } from './features/Places/components/PlacesList/PlaceSearchAddDetails.tsx';
+import TodoApp from './features/TodoList/TodoList.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -24,7 +25,7 @@ createRoot(document.getElementById('root')!).render(
               path="places/search/add-details"
               element={<PlaceSearchAddDetails />}
             />
-            <Route path="todos" element={<div>Todo Page</div>} />
+            <Route path="todos" element={<TodoApp />} />
             <Route path="*" element={<div>404 - Not Found</div>} />
           </Route>
         </Routes>

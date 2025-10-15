@@ -3,20 +3,20 @@
 export type Category = {
   id: number;
   name: string;
-  color: string; // e.g., for styling the UI
+  color: string;
 };
 
 export type Todo = {
   id: number;
   text: string;
-  categoryId: number; // Links to a Category.id
+  categoryId: number;
   completed: boolean;
 };
 
 export type TodoState = {
   todos: Todo[];
   categories: Category[];
-  nextTodoId: number; // Helps with adding new todos
+  nextTodoId: number;
 };
 
 export interface AddTodoAction {
@@ -70,19 +70,16 @@ export type TodoAction =
 // --- 6. Initial State ---
 
 export const initialTodoState: TodoState = {
-  todos: [
-    { id: 1, text: 'Buy groceries', categoryId: 101, completed: false },
-    { id: 2, text: 'Finish project report', categoryId: 102, completed: true },
-  ],
+  todos: [],
   categories: [
-    { id: 101, name: 'Personal', color: 'blue' },
-    { id: 102, name: 'Work', color: 'red' },
-    { id: 103, name: 'Health', color: 'green' },
+    { id: 101, name: 'Courses', color: 'blue' },
+    { id: 102, name: 'Maison', color: 'red' },
+    { id: 103, name: 'Paperasse', color: 'green' },
+    { id: 104, name: 'Idées', color: 'green' },
+    { id: 105, name: 'Tv', color: 'green' },
   ],
-  nextTodoId: 3, // Start next ID after the initial todos
+  nextTodoId: 1, // Start next ID after the initial todos
 };
-
-// --- 7. The Reducer Function ---
 
 export function todoReducer(state: TodoState, action: TodoAction): TodoState {
   switch (action.type) {
