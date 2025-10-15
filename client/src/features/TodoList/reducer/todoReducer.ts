@@ -72,6 +72,7 @@ export type TodoAction =
 export const initialTodoState: TodoState = {
   todos: [],
   categories: [
+    { id: 100, name: 'Toutes', color: 'blue' },
     { id: 101, name: 'Courses', color: 'blue' },
     { id: 102, name: 'Maison', color: 'red' },
     { id: 103, name: 'Paperasse', color: 'green' },
