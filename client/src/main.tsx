@@ -2,22 +2,33 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import App from './App.tsx';
-import './index.css';
 import AppLayout from './AppLayout.tsx';
+import { PlaceSearch } from './features/Places/components/PlacesList/PlaceSearchForm.tsx';
 import { PlacesList } from './features/Places/components/PlacesList/PlacesList.tsx';
+import './index.css';
+import { PlaceProvider } from './context/Places/PlaceContextProvider.tsx';
+import { PlaceSearchAddDetails } from './features/Places/components/PlacesList/PlaceSearchAddDetails.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* The layout route */}
-        <Route element={<AppLayout />}>
-          {/* Child routes inherit layout */}
-          <Route path="/" element={<App />} />
-          <Route path="/places" element={<PlacesList />} />
-          <Route path="/todos" element={<div>Todo Page</div>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <PlaceProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* The layout route */}
+          <Route element={<AppLayout />}>
+            {/* Child routes inherit layout */}
+            <Route path="/" element={<App />} />
+            <Route path="places" element={<PlacesList />} />
+            <Route path="places/search" element={<PlaceSearch />} />
+            <Route
+              path="places/search/add-details"
+              element={<PlaceSearchAddDetails />}
+            />
+            <Route path="todos" element={<div>Todo Page</div>} />
+            <Route path="*" element={<div>404 - Not Found</div>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </PlaceProvider>
   </StrictMode>
 );

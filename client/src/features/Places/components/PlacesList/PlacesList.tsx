@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { Button } from 'components/ui/Button';
 import { ModalBase } from 'components/ui/ModalBase';
 import { DialogTrigger, Pressable } from 'react-aria-components';
+import { Link, Outlet } from 'react-router';
 import { useGetPlacesList } from '../../hooks/useGetPlacesList';
 import { PlaceItem } from '../PlaceItem/PlaceItem';
 
@@ -30,7 +31,7 @@ export const PlacesList = () => {
     );
   }
   return (
-    <div className="mt-5 flex h-[750px] w-full flex-col gap-2 overflow-y-auto pb-5">
+    <div className="mt-5 flex h-fit w-full flex-col gap-2 overflow-y-auto pb-5">
       {placesWithDetails?.map((place) => {
         return (
           <DialogTrigger key={place.details.name}>
@@ -47,7 +48,7 @@ export const PlacesList = () => {
                 <PlaceItem
                   name={place.details.name}
                   adress={place.details.address}
-                  imgSrc={place.details.photos?.[0].url}
+                  imgSrc={place.details.photos?.at(0)?.url}
                   website={place.details.website}
                 />
               </div>
@@ -55,6 +56,15 @@ export const PlacesList = () => {
           </DialogTrigger>
         );
       })}
+      <Link
+        to="search"
+        className="fixed bottom-0 left-0 m-0 flex w-full items-center justify-center p-5"
+      >
+        <Button variant="primary" type="button" className="w-fit bg-zinc-900">
+          Trouver un spot
+        </Button>
+      </Link>
+      <Outlet />
     </div>
   );
 };

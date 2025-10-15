@@ -5,9 +5,9 @@ import type { IPlaceData } from 'src/shared/types';
 
 export const PlaceItem = ({ name, adress, imgSrc, website }: IPlaceData) => {
   return (
-    <div className="relative flex h-full w-full flex-wrap items-center justify-between gap-2 pb-2 text-sm">
+    <div className="relative flex w-full flex-wrap items-center justify-between gap-2 pb-2 text-sm">
       <div className="flex grow items-center gap-2">
-        {imgSrc === null ? (
+        {imgSrc === undefined ? (
           <span className="size-14 rounded-lg bg-gray-200" />
         ) : (
           <img
