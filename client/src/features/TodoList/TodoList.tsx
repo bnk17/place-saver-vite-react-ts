@@ -1,7 +1,8 @@
 import { TaskDaily01FreeIcons } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import clsx from 'clsx';
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
+import { Input } from 'src/components/ui/Input';
 import {
   initialTodoState,
   todoReducer,
@@ -11,21 +12,26 @@ import {
 } from 'src/features/TodoList/reducer/todoReducer';
 // Import your types and functions from the files above
 
-const TodoApp: React.FC = () => {
+const TodoApp = () => {
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
   const [categorySelected, setCategorySelected] = useState<number | null>(null);
   const todoListFiltered = state.todos.filter(
     (t) => t.categoryId === categorySelected
   );
+  const todosListToDisplay =
+    categorySelected === '101' ? state.todos : todoListFiltered;
 
   return (
-    <div className="mt-5 flex flex-col">
-      <TodoCategories
-        categories={state.categories}
-        categorySelected={categorySelected}
-        onSelectCategory={setCategorySelected}
-      />
-      <TodoList todolist={todoListFiltered} dispatch={dispatch} />
+    <div className="mt-5 flex flex-col gap-3">
+      <TodoForm dispatch={dispatch} />
+      <div className="flex flex-col gap-2">
+        <TodoCategories
+          categories={state.categories}
+          categorySelected={categorySelected}
+          onSelectCategory={setCategorySelected}
+        />
+        <TodoList todolist={todosListToDisplay} dispatch={dispatch} />
+      </div>
     </div>
   );
 };
@@ -41,26 +47,36 @@ export const TodoCategories = ({
   categorySelected,
   onSelectCategory,
 }: ITodoCategoriesProps) => {
-  const cateogryRef = useRef<HTMLLIElement | null>(null);
-  function handleSelectCateogry(categoryId: number) {
-    if (cateogryRef.current !== null) {
-      cateogryRef.current.scrollIntoView({ behavior: 'instant' });
+  // store a ref for each category
+  const categoryRefs = useRef<Record<number, HTMLLIElement | null>>({});
+
+  function handleSelectCategory(categoryId: number) {
+    const el = categoryRefs.current[categoryId];
+    if (el) {
+      el.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
     }
     onSelectCategory(categoryId);
   }
 
   return (
-    <ul className="relative flex w-full items-center gap-2 overflow-x-auto p-2">
-      <div className="fixed right-5 h-10 w-5 rounded-md bg-white blur-xs" />
+    <ul className="relative flex w-full items-center gap-2 overflow-x-auto py-2">
+      {/* Optional gradient overlay at the right edge */}
+
       {categories.map((cat) => (
         <li
-          ref={cateogryRef}
-          className={clsx(
-            'rounded-md border-1 border-gray-300 px-2 select-none',
-            categorySelected === cat.id && 'border-none bg-zinc-700 text-white'
-          )}
           key={cat.id}
-          onClick={() => handleSelectCateogry(cat.id)}
+          ref={(el) => (categoryRefs.current[cat.id] = el)}
+          onClick={() => handleSelectCategory(cat.id)}
+          className={clsx(
+            'cursor-pointer rounded-md border border-gray-300 px-3 whitespace-nowrap transition-colors select-none',
+            categorySelected === cat.id
+              ? 'border-none bg-zinc-900 text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-100'
+          )}
         >
           {cat.name}
         </li>
@@ -76,12 +92,6 @@ type ITodoListProps = {
 
 export const TodoList = ({ todolist, dispatch }: ITodoListProps) => {
   // Example handler for your form submission
-  const handleAddTodo = (text: string, categoryId: number) => {
-    dispatch({
-      type: 'ADD_TODO',
-      payload: { text, categoryId },
-    });
-  };
 
   const handleToggleTodo = (id: number) => {
     dispatch({
@@ -91,7 +101,7 @@ export const TodoList = ({ todolist, dispatch }: ITodoListProps) => {
   };
 
   return (
-    <ul className="mt-5 flex flex-col gap-1">
+    <ul className="flex flex-col gap-1">
       <h2 className="flex gap-1">
         <span>
           <HugeiconsIcon icon={TaskDaily01FreeIcons} width={20} />
@@ -100,15 +110,24 @@ export const TodoList = ({ todolist, dispatch }: ITodoListProps) => {
       </h2>
       {todolist.map((todo) => {
         return (
-          <li
-            key={todo.id}
-            className="flex gap-1 select-none"
-            onClick={() => handleToggleTodo(todo.id)}
-          >
+          <li key={todo.id} className="ml-0.5 flex gap-1 select-none">
             <input
+              className="w-4"
               type="checkbox"
               checked={todo.completed}
-              onChange={() => null}
+              onChange={(e) => {
+                handleToggleTodo(todo.id);
+                if (e.target.checked) {
+                  setTimeout(
+                    () =>
+                      dispatch({
+                        type: 'DELETE_TODO',
+                        payload: { id: todo.id },
+                      }),
+                    500
+                  );
+                }
+              }}
             />
             <span
               style={{
@@ -121,6 +140,43 @@ export const TodoList = ({ todolist, dispatch }: ITodoListProps) => {
         );
       })}
     </ul>
+  );
+};
+
+type ITodoFormProps = {
+  dispatch: React.ActionDispatch<[action: TodoAction]>;
+};
+export const TodoForm = ({ dispatch }: ITodoFormProps) => {
+  const [todoValue, setTodoValue] = useState('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const handleAddTodo = (text: string, categoryId: number) => {
+    dispatch({
+      type: 'ADD_TODO',
+      payload: { text, categoryId },
+    });
+
+    setTodoValue('');
+  };
+
+  useEffect(() => {
+    if (inputRef.current !== null) {
+      inputRef.current.focus();
+    }
+  });
+
+  return (
+    <Input
+      inputRef={inputRef}
+      className="rounded-md border-1 border-gray-300 px-2 py-0.5 outline-blue-600"
+      name="tags"
+      placeholder="Écrire une todo"
+      type="text"
+      value={todoValue}
+      onValueChange={(e) => setTodoValue(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') handleAddTodo(todoValue, 101);
+      }}
+    />
   );
 };
 
