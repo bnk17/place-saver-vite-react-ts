@@ -5,7 +5,6 @@ import App from './App.tsx';
 import AppLayout from './AppLayout.tsx';
 import { PlaceProvider } from './context/Places/PlaceContextProvider.tsx';
 import { PlaceSearchAddDetails } from './features/Places/components/PlaceSearchAddDetails.tsx';
-import { PlaceSearch } from './features/Places/components/PlaceSearchForm.tsx';
 import { PlacesList } from './features/Places/components/PlacesList.tsx';
 import TodoPage from './features/Todo/TodoPage.tsx';
 import './index.css';
@@ -20,7 +19,6 @@ createRoot(document.getElementById('root')!).render(
             {/* Child routes inherit layout */}
             <Route path="/" element={<App />} />
             <Route path="places" element={<PlacesList />} />
-            <Route path="places/search" element={<PlaceSearch />} />
             <Route
               path="places/search/add-details"
               element={<PlaceSearchAddDetails />}

@@ -175,7 +175,7 @@ export function PlaceSearch() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center">
+    <div className="flex h-fit w-full flex-col items-center justify-center">
       {errorMessage && (
         <div
           className={`mb-5 w-full rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700`}
@@ -187,7 +187,7 @@ export function PlaceSearch() {
         {/* Search Input */}
         <div
           className={
-            'relative flex h-fit w-full items-end justify-center gap-2 rounded-2xl border-2 border-slate-300 p-3 shadow-blue-500/25 transition-all duration-75 ease-out focus-within:border-blue-600 focus-within:shadow-lg'
+            'relative flex h-fit w-full items-end justify-center gap-2 rounded-xl border-2 border-slate-300 p-3 shadow-blue-500/25 transition-all duration-75 ease-out focus-within:border-blue-600 focus-within:shadow-lg'
           }
         >
           <Input

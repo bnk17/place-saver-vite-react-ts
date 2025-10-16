@@ -11,7 +11,7 @@ export const AppHeader = () => {
           Rmnd.
         </h1>
       </Link>
-      <nav className="space-x-2">
+      <nav className="space-x-2 text-lg">
         <Link
           to="/todos"
           className={clsx(
