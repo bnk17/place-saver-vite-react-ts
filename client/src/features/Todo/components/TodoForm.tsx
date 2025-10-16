@@ -31,7 +31,7 @@ export const TodoForm = ({ state, dispatch }: ITodoFormProps) => {
     <div className="flex flex-col items-start">
       <Input
         inputRef={inputRef}
-        className="w-full rounded-md border-1 border-gray-300 px-2 py-0.5 outline-blue-600"
+        className="w-full rounded-md border-1 border-gray-300 p-1.5 text-lg outline-blue-600"
         name="tags"
         placeholder="Écrire une todo"
         type="text"

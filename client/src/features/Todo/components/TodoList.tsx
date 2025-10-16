@@ -25,7 +25,7 @@ export const TodoList = ({ todolist, dispatch }: ITodoListProps) => {
   };
 
   return (
-    <div>
+    <div className="text-lg">
       <ul className="flex flex-col gap-1">
         <h2 className="flex gap-1">
           <span>
@@ -135,7 +135,7 @@ const TodoItem = ({
         className="flex size-10 shrink-0 items-center justify-center rounded-full text-violet-700 active:bg-violet-100"
         onClick={handleEditClick} // Use the dedicated edit handler
       >
-        <HugeiconsIcon icon={Edit02FreeIcons} size={15} strokeWidth={2} />
+        <HugeiconsIcon icon={Edit02FreeIcons} size={18} strokeWidth={2} />
       </button>
     </div>
   );
@@ -204,13 +204,13 @@ const TodoEditModal: React.FC<TodoEditModalProps> = ({
               onClick={onClose}
               className="rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-300"
             >
-              Cancel
+              Annuler
             </button>
             <button
               type="submit"
               className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
             >
-              Save
+              Éditer
             </button>
           </div>
         </form>

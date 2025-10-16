@@ -41,7 +41,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
       ref={ref}
       onClick={() => (onSelect ? onSelect(category) : onClick())}
       className={clsx(
-        'cursor-pointer rounded-md border px-2 py-1 text-sm transition-colors select-none',
+        'text-md cursor-pointer rounded-md border px-2 py-1 text-lg transition-colors select-none',
         isSelected
           ? `${categoryColors[category.color]} border-none font-medium`
           : `border-gray-200 bg-white text-gray-700 hover:bg-gray-100 ${`focus:bg-${category.color}-900`}`
@@ -73,7 +73,7 @@ export const TodoCategories = ({
   }
 
   return (
-    <ul className="relative flex w-full items-center gap-2 overflow-x-auto py-2">
+    <ul className="relative flex w-full items-center gap-2 overflow-x-auto py-4">
       {categories.map((cat) => (
         <CategoryItem
           variant="page"
@@ -102,7 +102,7 @@ export const TodoCategoryModal = ({
       <Pressable>
         <div>
           <ModalBase isOpen={isModalOpen}>
-            <ul className="flex flex-col flex-wrap gap-3 p-4">
+            <ul className="flex flex-col flex-wrap gap-3 p-8">
               <div className="flex w-full justify-center">
                 <button className="flex size-10 items-center justify-center rounded-full bg-gray-100 text-gray-600">
                   <HugeiconsIcon
@@ -158,7 +158,7 @@ export const TodoCategoryModal = ({
           ) : (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="mt-1 p-1.5 text-sm font-medium text-gray-600"
+              className="text-md mt-1 p-1.5 font-medium text-gray-600"
             >
               Choisir la catégorie
             </button>
