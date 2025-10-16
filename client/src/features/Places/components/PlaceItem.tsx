@@ -17,8 +17,8 @@ export const PlaceItem = ({ name, adress, imgSrc, website }: IPlaceData) => {
           />
         )}
         <div className="cursor-pointer">
-          <p className="w-[20ch] text-lg font-medium">{name}</p>
-          <p className="w-[25ch] text-[13px] text-zinc-600">{adress}</p>
+          <p className="w-[18ch] text-xl font-medium">{name}</p>
+          <p className="w-[20ch] text-[16px] text-zinc-600">{adress}</p>
         </div>
       </div>
       {/* <button
@@ -34,13 +34,16 @@ export const PlaceItem = ({ name, adress, imgSrc, website }: IPlaceData) => {
       </button> */}
       <button
         className={clsx(
-          'mr-2 p-1',
-          website !== null ? 'text-zinc-900' : 'text-gray-300'
+          'z-30 mr-2 p-1',
+          website !== undefined ? 'text-zinc-900' : 'text-gray-300'
         )}
-        disabled={website !== null}
+        disabled={website === undefined}
       >
         <a href={website}>
-          <HugeiconsIcon icon={AiWebBrowsingFreeIcons} />
+          <HugeiconsIcon
+            icon={AiWebBrowsingFreeIcons}
+            className="text-amber-500"
+          />
         </a>
       </button>
     </div>

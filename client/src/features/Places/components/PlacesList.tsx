@@ -1,17 +1,22 @@
-import { LocationFavourite02FreeIcons } from '@hugeicons/core-free-icons';
+import {
+  AddIcon,
+  LocationFavourite02FreeIcons,
+} from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import clsx from 'clsx';
 import { Button } from 'components/ui/Button';
 import { ModalBase } from 'components/ui/ModalBase';
 import { DialogTrigger, Pressable } from 'react-aria-components';
-import { Link, Outlet } from 'react-router';
 import { useGetPlacesList } from '../hooks/useGetPlacesList';
 import { PlaceItem } from './PlaceItem';
-import clsx from 'clsx';
+import { PlaceSearch } from './PlaceSearchForm';
+import { useState } from 'react';
 
 export const PlacesList = () => {
   // Get API key from environment variable
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const { placesWithDetails } = useGetPlacesList(apiKey ?? '');
+  const [isSearchmodalOpen, setIsSearchmodalOpen] = useState(false);
 
   if (placesWithDetails.length === 0) {
     return (
@@ -44,34 +49,63 @@ export const PlacesList = () => {
                     'border-b-1 border-gray-200'
                 )}
               >
-                <ModalBase isDismissable>
+                {/* <ModalBase isDismissable>
                   <div className="size-full bg-amber-100">
                     <div className="w-full p-2">{place.details.address}</div>
                     <Button variant="primary" size="sm" className="bg-red-500">
                       Supprimer
                     </Button>
                   </div>
-                </ModalBase>
+                </ModalBase> */}
                 <PlaceItem
                   name={place.details.name}
                   adress={place.details.address}
                   imgSrc={place.details.photos?.at(0)?.url}
-                  website={place.details.website}
+                  website={place.details.website ?? undefined}
                 />
               </div>
             </Pressable>
           </DialogTrigger>
         );
       })}
-      <Link
-        to="search"
-        className="fixed bottom-0 left-0 m-0 flex w-full items-center justify-center p-5"
-      >
-        <Button variant="primary" type="button" className="w-fit bg-zinc-900">
-          Trouver un spot
-        </Button>
-      </Link>
-      <Outlet />
+      <div className="flex items-center justify-center">
+        <DialogTrigger>
+          <Pressable>
+            <div>
+              <ModalBase isOpen={isSearchmodalOpen}>
+                <div className="bg-opacity-50 fixed inset-0 z-50 flex w-full items-end bg-black/20">
+                  <div className="flex h-[400px] w-full flex-col gap-2 rounded-t-xl bg-white p-6 shadow-2xl">
+                    <h3 className="text-left text-lg font-medium">
+                      Trouver un spot
+                    </h3>
+                    <PlaceSearch />
+                    <div className="flex items-center justify-end gap-2">
+                      <Button
+                        variant="secondary"
+                        onClick={() => setIsSearchmodalOpen(false)}
+                      >
+                        Annuler
+                      </Button>
+                      <Button onClick={() => setIsSearchmodalOpen(true)}>
+                        Trouver
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </ModalBase>
+              <div className="fixed inset-0 z-1 mb-8 flex items-end justify-center">
+                <button
+                  type="button"
+                  className="flex items-center justify-center rounded-full border-none bg-zinc-800 p-3 text-white"
+                  onClick={() => setIsSearchmodalOpen(true)}
+                >
+                  <HugeiconsIcon icon={AddIcon} />
+                </button>
+              </div>
+            </div>
+          </Pressable>
+        </DialogTrigger>
+      </div>
     </div>
   );
 };
