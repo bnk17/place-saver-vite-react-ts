@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import App from './App.tsx';
 import AppLayout from './AppLayout.tsx';
-import { PlaceSearch } from './features/Places/components/PlacesList/PlaceSearchForm.tsx';
-import { PlacesList } from './features/Places/components/PlacesList/PlacesList.tsx';
-import './index.css';
 import { PlaceProvider } from './context/Places/PlaceContextProvider.tsx';
 import { PlaceSearchAddDetails } from './features/Places/components/PlacesList/PlaceSearchAddDetails.tsx';
-import TodoApp from './features/TodoList/TodoList.tsx';
+import { PlaceSearch } from './features/Places/components/PlacesList/PlaceSearchForm.tsx';
+import { PlacesList } from './features/Places/components/PlacesList/PlacesList.tsx';
+import TodoPage from './features/Todo/TodoPage.tsx';
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')!).render(
               path="places/search/add-details"
               element={<PlaceSearchAddDetails />}
             />
-            <Route path="todos" element={<TodoApp />} />
+            <Route path="todos" element={<TodoPage />} />
             <Route path="*" element={<div>404 - Not Found</div>} />
           </Route>
         </Routes>
