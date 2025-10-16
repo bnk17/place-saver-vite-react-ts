@@ -4,11 +4,7 @@ import type {
   GooglePlaceDetails,
   GooglePlaceSearchResult,
 } from 'src/services/googleMapsService';
-
-interface UseGoogleMapsConfig {
-  apiKey: string;
-  autoInitialize?: boolean;
-}
+import type { IUseGoogleMapsConfig } from '../types/hooks.types';
 
 interface UseGoogleMapsReturn {
   isLoading: boolean;
@@ -41,7 +37,7 @@ interface UseGoogleMapsReturn {
 export function useGoogleMaps({
   apiKey,
   autoInitialize = true,
-}: UseGoogleMapsConfig): UseGoogleMapsReturn {
+}: IUseGoogleMapsConfig): UseGoogleMapsReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);

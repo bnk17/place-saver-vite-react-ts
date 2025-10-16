@@ -6,7 +6,7 @@ import {
   PlaceDispatchContext,
 } from 'src/context/Places/PlacesContext';
 import { savePlaceId } from 'src/features/Places/services/places.api';
-import { PlaceItem } from '../PlaceItem/PlaceItem';
+import { PlaceItem } from './PlaceItem';
 import { useNavigate } from 'react-router';
 
 export const PlaceSearchAddDetails = () => {

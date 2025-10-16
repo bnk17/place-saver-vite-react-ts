@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useGetPlacesData } from 'src/features/Places/services/places.api';
+import type {
+  IPlaceWithDetailsAndTags,
+  IUseGetPlacesProps,
+} from '../types/hooks.types';
 import { useGoogleMaps } from './useGoogleMaps';
-import type { GooglePlaceDetails } from 'src/services/googleMapsService';
-import type { IPlaceTag } from 'src/shared/types';
 
-type PlaceWithDetailsAndTags = {
-  details: GooglePlaceDetails;
-  tags: IPlaceTag[];
-};
-
-type UseGetPlaces = {
-  placesWithDetails: PlaceWithDetailsAndTags[];
-  tags: IPlaceTag[]; // maybe you want a combined tag list too
-};
-
-export const useGetPlacesList = (apiKey: string): UseGetPlaces => {
+export const useGetPlacesList = (apiKey: string): IUseGetPlacesProps => {
   const { data: placesData } = useGetPlacesData();
   const { getPlaceDetails } = useGoogleMaps({ apiKey });
-  const [places, setPlaces] = useState<PlaceWithDetailsAndTags[]>([]);
+  const [places, setPlaces] = useState<IPlaceWithDetailsAndTags[]>([]);
 
   useEffect(() => {
     async function fetchPlaces() {

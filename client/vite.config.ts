@@ -15,8 +15,6 @@ export default defineConfig({
       src: path.resolve(__dirname, 'src'),
       components: path.resolve(__dirname, 'src/components'),
       features: path.resolve(__dirname, 'src/features'),
-      shared: path.resolve(__dirname, 'src/shared'),
-      reducers: path.resolve(__dirname, 'src/reducers'),
       context: path.resolve(__dirname, 'src/context'),
       utils: path.resolve(__dirname, 'src/utils'),
       api: path.resolve(__dirname, 'src/api'),
