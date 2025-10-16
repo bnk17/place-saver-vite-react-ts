@@ -4,8 +4,8 @@ import { Button } from 'components/ui/Button';
 import { ModalBase } from 'components/ui/ModalBase';
 import { DialogTrigger, Pressable } from 'react-aria-components';
 import { Link, Outlet } from 'react-router';
-import { useGetPlacesList } from '../../hooks/useGetPlacesList';
-import { PlaceItem } from '../PlaceItem/PlaceItem';
+import { useGetPlacesList } from '../hooks/useGetPlacesList';
+import { PlaceItem } from './PlaceItem';
 import clsx from 'clsx';
 
 export const PlacesList = () => {

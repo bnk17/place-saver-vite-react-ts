@@ -1,5 +1,8 @@
 import { useReducer } from 'react';
-import { placeReducer, placeInitialState } from 'src/reducers/placeReducer';
+import {
+  placeReducer,
+  placeInitialState,
+} from 'src/features/Places/store/placeReducer';
 import { PlaceContext, PlaceDispatchContext } from './PlacesContext';
 
 type IPlaceProviderProps = {

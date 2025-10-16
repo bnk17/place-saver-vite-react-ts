@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
 import { PlaceDispatchContext } from 'src/context/Places/PlacesContext';
-import type { IPlaceReducerAction } from 'src/reducers/placeReducer';
+import type { IPlaceReducerAction } from 'src/features/Places/store/placeReducer';
 import type { IPlaceTag } from 'src/shared/types';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';

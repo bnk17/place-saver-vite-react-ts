@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import App from './App.tsx';
 import AppLayout from './AppLayout.tsx';
 import { PlaceProvider } from './context/Places/PlaceContextProvider.tsx';
-import { PlaceSearchAddDetails } from './features/Places/components/PlacesList/PlaceSearchAddDetails.tsx';
-import { PlaceSearch } from './features/Places/components/PlacesList/PlaceSearchForm.tsx';
-import { PlacesList } from './features/Places/components/PlacesList/PlacesList.tsx';
+import { PlaceSearchAddDetails } from './features/Places/components/PlaceSearchAddDetails.tsx';
+import { PlaceSearch } from './features/Places/components/PlaceSearchForm.tsx';
+import { PlacesList } from './features/Places/components/PlacesList.tsx';
 import TodoPage from './features/Todo/TodoPage.tsx';
 import './index.css';
 

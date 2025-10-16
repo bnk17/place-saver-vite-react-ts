@@ -9,7 +9,7 @@ import {
   generateAdditionalInfoFromGooglePlace,
 } from 'utils/googleMapsHelpers';
 import { Input } from 'components/ui/Input';
-import { useGoogleMaps } from '../../hooks/useGoogleMaps';
+import { useGoogleMaps } from '../hooks/useGoogleMaps';
 import { useNavigate } from 'react-router';
 
 interface SearchResult extends GooglePlaceSearchResult {

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { PlacesList } from 'src/features/Places/components/PlacesList/PlacesList';
+import { PlacesList } from 'src/features/Places/components/PlacesList';
 import { describe, expect, test } from 'vitest';
 
 describe('Tests display of the features places-list and place-search-form', () => {
